@@ -166,7 +166,6 @@ function Barcode() {
           className="col-md-4"
           style={{ border: "1px solid rgb(206 200 200)" }}
         >
-          <h4 style={{ color: "green" }} id="success"></h4>
           <h5 className="text-center  ml-4 mb-5 mt-4">Generate Barcode</h5>
           <div className="form-group">
             <input
