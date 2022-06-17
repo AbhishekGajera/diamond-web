@@ -168,6 +168,7 @@ function Barcode() {
         >
           <h5 className="text-center  ml-4 mb-5 mt-4">Generate Barcode</h5>
           <div className="form-group">
+            <label>Enter Kapan Number</label>
             <input
               type="text"
               className="form-control  mb-4"
@@ -179,6 +180,7 @@ function Barcode() {
             />
           </div>
           <div className="form-group">
+            <label>Enter totalWeight</label>
             <input
               type="text"
               className="form-control  mb-4"
@@ -190,6 +192,7 @@ function Barcode() {
             />
           </div>
           <div className="form-group">
+            <label>Enter total stone no to generate</label>
             <input
               type="text"
               className="form-control  mb-4"
