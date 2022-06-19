@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import { getAllProduct } from "../src/Services/ApiService";
 import Barcodes from "react-barcode";
@@ -21,15 +20,14 @@ function Barcode() {
   const { cuttingNumber, totalWeight, stoneNo } = barcod; // Array Destructutring
 
   // Handling Input values here
-
   const onInputChange = (e) => {
     if (
-      (e.target.name === "stoneNo" || e.target.name === "cuttingNumber") &&
+      (e.target.name === "stoneNo") &&
       !isNaN(+e.target.value)
     ) {
       setBarcod({ ...barcod, [e.target.name]: e.target.value });
     }
-    if (e.target.name !== "stoneNo" && e.target.name !== "cuttingNumber") {
+    if (e.target.name !== "stoneNo") {
       setBarcod({ ...barcod, [e.target.name]: e.target.value });
     }
   };
@@ -77,8 +75,8 @@ function Barcode() {
   };
 
   const validation = () => {
-    if (typeof +stoneNo !== "number") {
-      alert("Please select correct number");
+    if (!stoneNo) {
+      alert("kapan number is required");
       return false;
     }
     if (!totalWeight) {
@@ -102,7 +100,9 @@ function Barcode() {
     }
   };
 
-  const onChangeHandler = (id, value, name) => {
+  console.info("list++ ",list)
+
+  const onChangeHandler = (id, value, name, defaultId) => {
     const find = list?.find((i) => i?.id === id);
     if (find) {
       const filteredList = list?.map((i) => {
@@ -115,7 +115,7 @@ function Barcode() {
       return;
     }
 
-    const newObj = { id, [name]: value };
+    const newObj = { id, stone : defaultId, [name]: value };
     setlist([...list, newObj]);
   };
 
@@ -217,7 +217,7 @@ function Barcode() {
         <div className="col-md-8">
           <table>
             <tr>
-              <th>id</th>
+              <th style={{ display : 'none' }}>id</th>
               <th>Kapan No</th>
               <th>Total Weight</th>
               <th>Stone</th>
@@ -230,20 +230,22 @@ function Barcode() {
               .fill(undefined)
               ?.map((_, index) => {
                 return (
-                  <tr>
-                    <td>{+data?.cuttingNumber + index}</td>
-                    <td>{+data?.cuttingNumber}</td>
+                  <tr key={index}>
+                    <td style={{ display : 'none' }}>{+1 + index}</td>
+                    <td>{data?.cuttingNumber}</td>
                     <td>{data?.totalWeight}</td>
                     <td>
                       <input
                         onChange={(e) =>
                           onChangeHandler(
-                            +data?.cuttingNumber + index,
+                            1 + index,
                             e?.target?.value,
-                            e?.target?.name
+                            e?.target?.name,
+                            (1000 + index)
                           )
                         }
                         placeholder="enter stone no"
+                        defaultValue={(1000 + index)}
                         name="stone"
                       />
                     </td>
@@ -251,9 +253,10 @@ function Barcode() {
                       <input
                         onChange={(e) =>
                           onChangeHandler(
-                            +data?.cuttingNumber + index,
+                            1 + index,
                             e?.target?.value,
-                            e?.target?.name
+                            e?.target?.name,
+                            (1000 + index)
                           )
                         }
                         placeholder="enter stone weight"
@@ -264,9 +267,10 @@ function Barcode() {
                       <input
                         onChange={(e) =>
                           onChangeHandler(
-                            +data?.cuttingNumber + index,
+                            1 + index,
                             e?.target?.value,
-                            e?.target?.name
+                            e?.target?.name,
+                            (1000 + index)
                           )
                         }
                         placeholder="enter stone id"
@@ -277,9 +281,10 @@ function Barcode() {
                       <input
                         onChange={(e) =>
                           onChangeHandler(
-                            +data?.cuttingNumber + index,
+                            1 + index,
                             e?.target?.value,
-                            e?.target?.name
+                            e?.target?.name,
+                            (1000 + index)
                           )
                         }
                         placeholder="enter barcode no"
