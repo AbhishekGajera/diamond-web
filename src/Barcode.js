@@ -100,8 +100,6 @@ function Barcode() {
     }
   };
 
-  console.info("list++ ",list)
-
   const onChangeHandler = (id, value, name, defaultId) => {
     const find = list?.find((i) => i?.id === id);
     if (find) {
