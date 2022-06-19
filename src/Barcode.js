@@ -158,7 +158,7 @@ function Barcode() {
 
   return (
     <div className="container">
-      <h4 className="mt-3 text-success mb-4">Generate Barcode</h4>
+      <h4 className="mt-3 text-success mb-4">Auto Generate Barcodes here!</h4>
       <div className="row">
         <div
           className="col-md-4"
