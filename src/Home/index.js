@@ -6,17 +6,17 @@ function index() {
     <>
         <div className='container'>
             <h4 className="mt-3 text-success mb-4">Dashboard</h4>
-              <div className='row'>
+              <div className='row btn-custom'>
                 <div className='col-md-12'>
                   <Link className='btn btn-primary' to='/barcode'>Scan Barcode</Link>
                 </div>
               </div>
-              <div className='row'>
+              <div className='row btn-custom'>
                 <div className='col-md-12'>
                   <Link className='btn btn-primary' to='/party'>Party Management</Link>
                 </div>
               </div>
-              <div className='row'>
+              <div className='row btn-custom'>
                 <div className='col-md-12'>
                   <Link className='btn btn-primary' to='/stock'>stock Management</Link>
                 </div>

@@ -56,8 +56,7 @@ function Barcode() {
     stoneid,
     barcodenumber
   ) => {
-    console.info("cuttingno++ ", cuttingno);
-    await fetch("http://167.99.13.120:8001/addproduct", {
+    await fetch(`${process.env.REACT_APP_API_URL}/addproduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -40,3 +40,48 @@
 table, th, td {
   border: 1px solid black;
 }
+
+.btn-custom {
+  margin: 15px 0px !important;
+}
+
+.margin15 {
+  margin: 15px 0px !important;
+}
+
+.p0 {
+  padding: 0px !important;
+}
+
+.px-15 {
+  padding: 0px 15px !important;
+}
+
+.mr-20 {
+  margin-right: 20px !important;
+}
+
+.mx-15 {
+  margin: 0px 15px;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+.modal-container {
+  position: absolute !important;
+  width: 60% !important;
+  background: #ffffff !important;
+  left: 25% !important;
+  top: 30% !important;
+  padding: 20px !important;
+  padding-bottom: 0px !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-none {
+  display: none !important;
+}
