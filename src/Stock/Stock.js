@@ -23,7 +23,7 @@ function Stock() {
     stoneId: "",
     date: defaultValue,
     party: "",
-    status: "credit",
+    status: "issue",
   };
   const [stock, setStock] = useState(data);
   const [partyList, setpartyList] = useState([]);
@@ -80,9 +80,9 @@ function Stock() {
   // API doesn't have string that's why convert into numbers
   const formateSelectedType = (selectType) => {
     switch (selectType) {
-      case "credit":
+      case "issue":
         return 0;
-      case "debit":
+      case "receive":
         return 1;
       default:
         return 0;
@@ -92,11 +92,11 @@ function Stock() {
   const formatedStatus = (selectType) => {
     switch (selectType) {
       case 0:
-        return "credit";
+        return "issue";
       case 1:
-        return "debit";
+        return "receive";
       default:
-        return "credit";
+        return "issue";
     }
   };
 
@@ -152,8 +152,8 @@ function Stock() {
         <div>
         
           <select style={{ minWidth : 200 }} name="status" className="btn-custom" onChange={onChangeHandlerForEdit}>
-            <option value={0} selected={valurToEdit?.status === 0}>Credit</option>
-            <option value={1} selected={valurToEdit?.status === 1}>Debit</option>
+            <option value={0} selected={valurToEdit?.status === 0}>Issue</option>
+            <option value={1} selected={valurToEdit?.status === 1}>Receive</option>
           </select>
 
           <br />
@@ -229,23 +229,23 @@ function Stock() {
               className="form-check-input"
               onChange={onInputChange}
               name="status"
-              id="credit"
-              value="credit"
+              id="issue"
+              value="issue"
               checked
             />{" "}
-            <label className="form-check-label mr-20" htmlFor="credit">
-              Credit
+            <label className="form-check-label mr-20" htmlFor="issue">
+              Issue
             </label>
             <input
               type="radio"
               className="form-check-input"
               onChange={onInputChange}
               name="status"
-              id="debit"
-              value="debit"
+              id="receive"
+              value="receive"
             />{" "}
-            <label className="form-check-label mr-20" htmlFor="debit">
-              Debit
+            <label className="form-check-label mr-20" htmlFor="receive">
+              Receive
             </label>
           </div>
           <button
