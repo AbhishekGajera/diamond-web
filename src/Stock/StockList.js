@@ -59,6 +59,17 @@ function StockList() {
         });
     }
 
+    const formatedStatus = (selectType) => {
+        switch (selectType) {
+          case 0:
+            return "Issue";
+          case 1:
+            return "Receive";
+          default:
+            return "Issue";
+        }
+      };
+
     return (
         <>
             <Modal show={isOpenModel} handleClose={modalClose}>
