@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
 import Party from "./Party/Party";
 import Stock from "./Stock/Stock";
+import PartyList from "./Party/PartyList";
+import StockList from "./Stock/StockList";
 
 function App() {
   return (
@@ -25,7 +27,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/barcode" element={<Barcode />} />
           <Route path="/party" element={<Party />} />
+          <Route path="/party/:partyId" element={<Party />} />
+          <Route path="/partylist" element={<PartyList />} />
           <Route path="/stock" element={<Stock />} />
+          <Route path="/stock/:stockId" element={<Stock />} />
+          <Route path="/stocklist" element={<StockList />} />
         </Routes>
       </div>
   );
