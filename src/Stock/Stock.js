@@ -16,7 +16,7 @@ function Stock() {
     LotNo: "",
     stoneId: "",
     party: "",
-    status: stockType,
+    status: stockType
   };
 
   const [stock, setStock] = useState(data);
@@ -98,10 +98,10 @@ function Stock() {
       <h4 className="mt-3 text-success mb-4">Stock Management</h4>
       <div className='row btn-custom'>
         <div className='col-md-2'>
-          <Link className='btn btn-primary' to='/stock/1'>Generate Outside Stock</Link>
+          <Link className='btn btn-primary' to='/stock/1'>Create Stock</Link>
         </div>
         <div className='col-md-3'>
-          <Link className='btn btn-primary' to='/stock/2'>Generate Issue/Receive Stock</Link>
+          <Link className='btn btn-primary' to='/stock/2'>Issue/Receive Stock</Link>
         </div>
         <div className="col-md-2">
           <Link className="btn btn-success" to='/stocklist'>
@@ -119,8 +119,19 @@ function Stock() {
         </div>
       </div>
       )}
+      {stockId === '1' && (
+      <div className='row btn-custom'>
+        <div className='col-md-2'>
+          <button className='btn btn-primary' onClick={()=>{setStockType('Issue')}}>Generate Outside Stock</button>
+        </div>
+        <div className='col-md-3'>
+          <button className='btn btn-primary' onClick={()=>{setStockType('Receive')}}>Generate Inside Stock</button>
+        </div>
+      </div>
+      )}
       { stockId === '1' || stockId === '2' && stockType !== '' ? (
       <div className="row  mb-4">
+        
         <div
           className="col-md-6"
           style={{ border: "1px solid rgb(206 200 200)" }}

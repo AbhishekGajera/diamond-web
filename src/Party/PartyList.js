@@ -7,7 +7,16 @@ function PartyList() {
     const [searchTerm, setSearchTerm] = useState("");
     const [data, setdata] = useState([])
 
-
+    const formatedStatus = (selectType) => {
+        switch (selectType) {
+          case 0:
+            return "Outside";
+          case 1:
+            return "Inside";
+          default:
+            return "Inside";
+        }
+      };
     useEffect(() => {
         getData()
     }, [searchTerm])
@@ -59,6 +68,8 @@ function PartyList() {
                         <th>Name</th>
                         <th>Phone No</th>
                         <th>Description</th>
+                        <th>Type</th>
+
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -69,6 +80,8 @@ function PartyList() {
                         <td>{item?.name}</td>
                         <td>{item?.mobileno}</td>
                         <td>{item?.description}</td>
+                        <td>{formatedStatus(item?.type)}</td>
+
                         <td> <button className="btn btn-info" onClick={() => onClickDeleteHandler(item?.id)}>Delete</button> </td>
                     </tr>
                     })}
