@@ -65,6 +65,10 @@ table, th, td {
   margin: 0px 15px;
 }
 
+.form-group svg{
+  width:22px;
+}
+
 .modal {
   background: rgba(0, 0, 0, 0.6) !important;
 }
@@ -88,4 +92,5 @@ table, th, td {
 
 .d-flex {
   display: flex;
+  align-items: center;
 }

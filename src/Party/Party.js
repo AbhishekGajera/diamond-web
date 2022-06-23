@@ -57,7 +57,8 @@ function Party() {
   return (
     <div className="container">
       <h4 className="mt-3 text-success mb-4">Party Management</h4>
-      <div className='row btn-custom'>
+      <div className='row btn-custom mx-15'>
+        <div className='col-md-3'></div>
         <div className='col-md-2'>
           <Link className='btn btn-primary' to='/party/1'>Generate Inhouse Party</Link>
         </div>
@@ -69,16 +70,13 @@ function Party() {
             View All Party List
           </Link>
         </div>
-        {/* <div className="col-md-2">
-          <Link className="btn btn-success" to='/stock'>
-            Create Stock
-          </Link>
-        </div> */}
+        <div className='col-md-3'></div>
       </div>
       {partyId === '1' || partyId === '2' ? (
-        <div className="row px-15 mb-4">
+        <div className="row px-15 mb-4 ">
+          <div className="col-md-3"></div>
           <div className="col-md-6" style={{ border: "1px solid rgb(206 200 200)" }}>
-            <h4 className="text-center  ml-4 mb-5 mt-4">{partyId === '1' ? "Create Inout Party" : "Create Outside Party"}</h4>
+            <h4 className="text-center  ml-4 mb-5 mt-4">{partyId === '1' ? "Create Inhouse Party" : "Create Outside Party"}</h4>
             <div className="form-group">
               <label>Name</label>
               <input
@@ -121,6 +119,7 @@ function Party() {
               Submit
             </button>
           </div>
+          <div className="col-md-3"></div>
         </div>
       ) : ''}
     </div>

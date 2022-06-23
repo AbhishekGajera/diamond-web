@@ -88,12 +88,13 @@ function Stock() {
       <div className="container">
         <h4 className="mt-3 text-success mb-4">Stock Management</h4>
         <div className="row btn-custom">
+          <div className="col-md-3"></div>
           <div className="col-md-2">
             <Link className="btn btn-primary" to="/stock/1">
               Create Stock
             </Link>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <Link className="btn btn-primary" to="/stock/2">
               Issue/Receive Stock
             </Link>
@@ -103,12 +104,14 @@ function Stock() {
               View All Stock List
             </Link>
           </div>
+          <div className="col-md-3"></div>
         </div>
         {stockId === "2" && (
           <div className="row btn-custom">
+            <div className="col-md-4"></div>
             <div className="col-md-2">
               <button
-                className="btn btn-primary"
+                className="btn btn-info"
                 onClick={() => {
                   setStockType("Issue");
                 }}
@@ -116,9 +119,9 @@ function Stock() {
                 Generate Issue Stock
               </button>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <button
-                className="btn btn-primary"
+                className="btn btn-info"
                 onClick={() => {
                   setStockType("Receive");
                 }}
@@ -126,13 +129,15 @@ function Stock() {
                 Generate Receive Stock
               </button>
             </div>
+            <div className="col-md-4"></div>
           </div>
         )}
         {stockId === "1" && (
           <div className="row btn-custom">
+            <div className="col-md-4"></div>
             <div className="col-md-2">
               <button
-                className="btn btn-primary"
+                className="btn btn-info"
                 onClick={() => {
                   setStockType("outside");
                 }}
@@ -140,9 +145,9 @@ function Stock() {
                 Generate Outside Stock
               </button>
             </div>
-            <div className="col-md-3">
-              <button
-                className="btn btn-primary"
+            <div className="col-md-2">
+              <button 
+                className="btn btn-info"
                 onClick={() => {
                   setStockType("inside");
                 }}
@@ -150,14 +155,13 @@ function Stock() {
                 Generate Inside Stock
               </button>
             </div>
+            <div className="col-md-4"></div>
           </div>
         )}
         {stockId === "1" || (stockId === "2" && stockType !== "") ? (
           <div className="row  mb-4">
-            <div
-              className="col-md-6"
-              style={{ border: "1px solid rgb(206 200 200)" }}
-            >
+            <div className="col-md-3"></div>
+            <div className="col-md-6" style={{ border: "1px solid rgb(206 200 200)" }}>
               <h4 className="text-center  ml-4 mb-5 mt-4">
                 {stockId === "1" ? "Create Outside Stock" : ""}
                 {stockType !== "" && stockId === "2"
@@ -165,14 +169,15 @@ function Stock() {
                   : ""}{" "}
               </h4>
 
-              {stockType === "Issue" && <IssuesForm />}
+              {stockType === "Issue" && <IssuesForm  generateStock={generateStock} partyList={partyList} />}
 
-              {stockType === "Receive" && <RecieveForm />}
+              {stockType === "Receive" && <RecieveForm  generateStock={generateStock} partyList={partyList}/>}
 
               {stockType === "outside" && <OutSideForm generateStock={generateStock} partyList={partyList} />}
 
-              {stockType === "inside" && <InsideForm />}
+              {stockType === "inside" && <InsideForm generateStock={generateStock} />}
             </div>
+            <div className="col-md-3"></div>
           </div>
         ) : (
           ""

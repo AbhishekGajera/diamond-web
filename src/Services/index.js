@@ -4,6 +4,7 @@ import api from './axios';
 export const createParty = (data) => api('add-party', 'POST', data);
 export const fetchParty = (limit = 1000, page = 1,name) => api(`fetch-party?limit=${limit}&page${page}&custom=true&name=${name}`, 'GET');
 export const deleteParty = (id) => api(`delete-party/${id}`,'GET')
+export const updateParty = (data) => api(`update-party`,'PATCH',data)
 
 // stock management
 export const addStoke = (data) => api(`add-stock`,'POST',data);
