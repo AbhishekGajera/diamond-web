@@ -69,11 +69,11 @@ function Party() {
             View All Party List
           </Link>
         </div>
-        <div className="col-md-2">
+        {/* <div className="col-md-2">
           <Link className="btn btn-success" to='/stock'>
             Create Stock
           </Link>
-        </div>
+        </div> */}
       </div>
       {partyId === '1' || partyId === '2' ? (
         <div className="row px-15 mb-4">

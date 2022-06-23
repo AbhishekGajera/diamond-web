@@ -39,17 +39,17 @@ function Stock() {
     navigate('/stocklist');
   }
 
-  const validation = () => {
-    if (!LotNo) {
-      alert("Please add Lot No");
-      return false;
-    }
-    if (!stoneId) {
-      alert("Stone Id is required");
-      return false;
-    }
-    return true;
-  };
+  // const validation = () => {
+  //   if (!LotNo) {
+  //     alert("Please add Lot No");
+  //     return false;
+  //   }
+  //   if (!stoneId) {
+  //     alert("Stone Id is required");
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
   // API doesn't have string that's why convert into numbers
   const formateSelectedType = (selectType) => {
@@ -75,17 +75,18 @@ function Stock() {
   };
 
   const generateStock = () => {
-    if (validation()) {
+
       const data = JSON.stringify({
         lot_no: LotNo,
         stone_id: stoneId,
         party: party,
+        current_assign:party,
         status: formateSelectedType(status),
       });
       addStoke(data).finally(() => {
         getData(), setStock({ ...stock, LotNo: "", stoneId: "" });
       });
-    }
+    
   };
 
   const addNewRow = () =>{
