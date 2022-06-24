@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 
 const RecieveForm = ({ partyList, generateStock }) => {
   // party change handler for selectBox
-  const [selectedParty, setselectedParty] = useState("");
+  const [selectedParty, setselectedParty] = useState(partyList[0].id);
 
   // onchange events save in state
   const [value, setvalue] = useState([
@@ -15,30 +15,34 @@ const RecieveForm = ({ partyList, generateStock }) => {
 
   const { stoneId } = value;
 
-  const onInputChange = (id, name, value) => {
-    const data = value.findIndex((item) => item?.id === id);
-    if (data) {
+  
+  const onInputChange = (ids, name, values) => {
       const filteredData = value?.map((i) => {
-        if (i.id === id) {
-          i[name] = i[value];
+        if (i.id === ids) {
+          i[name] = values;
         }
         return i;
       });
-
       setvalue(filteredData);
-    }
   };
 
   const onSubmitHandler = () => {
-    const data = JSON.stringify({
-      lot_no: "",
-      stone_id: stoneId,
-      party: selectedParty,
-      current_assign: selectedParty,
-      status: 1, // status is default 1 for Receive
-    });
-    generateStock(data);
-  };
+    value?.map((i) => {
+      if(i.stoneId && i.weight){
+        const data = JSON.stringify({
+          lot_no: "",
+          stock_type : "",
+          stone_id: i.stoneId,
+          party: selectedParty,
+          current_assign: selectedParty,
+          weight: i.weight,
+          status: 1, // status is default 1 for Receive
+        });
+        
+        generateStock(data);
+      }
+    })
+  }
 
   const appendRowHandler = () => {
     const data = {
@@ -61,7 +65,7 @@ const RecieveForm = ({ partyList, generateStock }) => {
         <select
           name="party"
           className="form-control  mb-4"
-          onChange={() => setselectedParty(e?.target?.value)}
+          onChange={(e) => setselectedParty(e?.target?.value)}
         >
           {partyList?.map((item) => {
             return <option value={item?.id}>{item?.name}</option>;
@@ -87,7 +91,7 @@ const RecieveForm = ({ partyList, generateStock }) => {
                   type="text"
                   className="form-control  mb-4"
                   name="stoneId"
-                  onChange={() =>
+                  onChange={(e) =>
                     onInputChange(i.id, e?.target?.name, e?.target?.value)
                   }
                   placeholder="Enter stoneId"
@@ -100,7 +104,7 @@ const RecieveForm = ({ partyList, generateStock }) => {
                   type="text"
                   className="form-control  mb-4"
                   name="weight"
-                  onChange={() =>
+                  onChange={(e) =>
                     onInputChange(i.id, e?.target?.name, e?.target?.value)
                   }
                   placeholder="Enter Weight"

@@ -79,13 +79,12 @@ function Stock() {
   };
 
   const generateStock = (data) => {
-    console.log("mydata",stock)
+    // console.log("mydata",stock)
+    console.log("data",data)
     addStoke(data).finally(() => {
       getData(), setStock({ ...stock, LotNo: "", stoneId: "" });
     });
   };
-
-  const addNewRow = () => {};
 
   return (
     <>

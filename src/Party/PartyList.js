@@ -35,7 +35,6 @@ function PartyList() {
 
     const onChangeHandlerForEdit = (e) => {
         setvalurToEdit({ ...valurToEdit,  [e.target.name]: e.target.value })
-        console.log("valurToEdit",valurToEdit)
     }
 
     const updateHandler = () => {
@@ -54,7 +53,6 @@ function PartyList() {
 
     const getData = async () => {
         const result = await fetchParty(1000,1,searchTerm)
-        console.log("res",result)
         setdata(result?.data?.results)
         setLoaded(true)
     }
@@ -111,8 +109,8 @@ function PartyList() {
                     <div className='form-group'>
                         <label>Type</label>
                         <select style={{ minWidth : 200 }} name="status" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
-                            <option value={0} selected={valurToEdit?.status === 0}>Outside</option>
-                            <option value={1} selected={valurToEdit?.status === 1}>Inside</option>
+                            <option value={0} selected={valurToEdit?.type === 0}>Outside</option>
+                            <option value={1} selected={valurToEdit?.type === 1}>Inside</option>
                         </select>
                     </div>
                     <br />

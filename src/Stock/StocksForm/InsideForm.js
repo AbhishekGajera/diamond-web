@@ -5,37 +5,40 @@ const InsideForm = ({ generateStock }) => {
   const [value, setvalue] = useState([
     {
       id: 0,
-      lotNo:"",
       stoneId: "",
       weight: "",
     },
   ]);
+  const [lotNo, setlotNo] = useState("");
 
   const { stoneId } = value;
 
-  const onInputChange = (id, name, value) => {
-    const data = value.findIndex((item) => item?.id === id);
-    if (data) {
-      const filteredData = value?.map((i) => {
-        if (i.id === id) {
-          i[name] = i[value];
-        }
-        return i;
-      });
-
-      setvalue(filteredData);
-    }
+  const onInputChange = (ids, name, values) => {
+    const filteredData = value?.map((i) => {
+      if (i.id === ids) {
+        i[name] = values;
+      }
+      return i;
+    });
+    setvalue(filteredData);
   };
 
   const onSubmitHandler = () => {
-    const data = JSON.stringify({
-      lot_no: "",
-      stone_id: stoneId,
-      party: "",
-      current_assign: "",
-      status: 1, // status is default 1 for inside party
-    });
-    generateStock(data);
+    value?.map((i) => {
+      if(i.stoneId && i.weight){
+        const data = JSON.stringify({
+          lot_no: lotNo,
+          stock_type : "1", //1 for inside 
+          stone_id: i.stoneId,
+          party: "",
+          current_assign: "",
+          weight: i.weight,
+          status: 0, // status is default 0 for issue
+        });
+        
+        generateStock(data);
+      }
+    })
   };
 
   const appendRowHandler = () => {
@@ -57,7 +60,7 @@ const InsideForm = ({ generateStock }) => {
       <div className="form-group">
         <label>Lot No</label>
         <input type="text" name="lotNo" className="form-control  mb-4" placeholder='Enter Lot No'
-          onChange={() => onInputChange( e?.target?.name, e?.target?.value)} />
+          onChange={(e) => setlotNo(e?.target?.value)} />
         </div>
       <div>
       <div className='row'>
@@ -78,7 +81,7 @@ const InsideForm = ({ generateStock }) => {
                   type="text"
                   className="form-control  mb-4"
                   name="stoneId"
-                  onChange={() =>
+                  onChange={(e) =>
                     onInputChange(i.id, e?.target?.name, e?.target?.value)
                   }
                   placeholder="Enter stoneId"
@@ -91,7 +94,7 @@ const InsideForm = ({ generateStock }) => {
                   type="text"
                   className="form-control  mb-4"
                   name="weight"
-                  onChange={() =>
+                  onChange={(e) =>
                     onInputChange(i.id, e?.target?.name, e?.target?.value)
                   }
                   placeholder="Enter Weight"
