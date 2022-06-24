@@ -30,14 +30,20 @@ const IssuesForm = ({ partyList, generateStock }) => {
   };
 
   const onSubmitHandler = () => {
-    const data = JSON.stringify({
-      lot_no: "",
-      stone_id: stoneId,
-      party: selectedParty,
-      current_assign: selectedParty,
-      status: 0, // status is default 0 for issue
-    });
-    generateStock(data);
+    value?.map((i) => {
+      if(i.stoneId && i.weight){
+        const data = JSON.stringify({
+          lot_no: "",
+          stone_id: i.stoneId,
+          party: selectedParty,
+          current_assign: '',
+          weight: i.weight,
+          status: 0, // status is default 0 for issue
+        });
+
+        generateStock(data);
+      }
+    })
   };
 
   const appendRowHandler = () => {
