@@ -54,6 +54,7 @@ function PartyList() {
 
     const getData = async () => {
         const result = await fetchParty(1000,1,searchTerm)
+        console.log("res",result)
         setdata(result?.data?.results)
         setLoaded(true)
     }

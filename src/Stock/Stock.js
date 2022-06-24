@@ -11,6 +11,7 @@ function Stock() {
   let navigate = useNavigate();
 
   const [stockType, setStockType] = useState("");
+
   const [partyList, setpartyList] = useState([]);
 
   const data = {
@@ -18,10 +19,11 @@ function Stock() {
     stoneId: "",
     party: "",
     status: stockType,
+    current_assign:"",
   };
 
   const [stock, setStock] = useState(data);
-  const { LotNo, stoneId, status, party } = stock;
+  const { LotNo, stoneId, status, party,current_assign } = stock;
 
   const onInputChange = (e) => {
     setStock({ ...stock, [e.target.name]: e.target.value });
@@ -31,8 +33,9 @@ function Stock() {
   useEffect(() => {
     (async () => {
       const parties = await fetchParty(1000, 1, "");
-      setpartyList(parties?.data?.results);
-      setStock({ ...stock, party: parties?.data?.results[0]?.id });
+      setpartyList(parties?.data?.results); 
+      setStock({ ...stock, party: parties?.data?.results[0]?.id,current_assign:parties?.data?.results[0]?.id,current_assign: parties?.data?.results[0]?.id });
+
     })();
   }, []);
 
@@ -76,6 +79,7 @@ function Stock() {
   };
 
   const generateStock = (data) => {
+    console.log("mydata",stock)
     addStoke(data).finally(() => {
       getData(), setStock({ ...stock, LotNo: "", stoneId: "" });
     });
