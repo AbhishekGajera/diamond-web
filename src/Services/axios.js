@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseURL = process.env.REACT_APP_API_URL;
-const baseURL = 'http://localhost:8001'
+const baseURL = process.env.REACT_APP_API_URL;
+// const baseURL = 'http://localhost:8001'
 
 const serialize = function(obj) {
   var str = [];
