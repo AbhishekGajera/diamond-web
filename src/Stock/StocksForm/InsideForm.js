@@ -28,10 +28,10 @@ const InsideForm = ({ generateStock }) => {
       if(i.stoneId && i.weight){
         const data = JSON.stringify({
           lot_no: lotNo,
-          stock_type : "1", //1 for inside 
+          stock_type : 1, //1 for inside 
           stone_id: i.stoneId,
           party: "62b522f33f7410cafb1af062",
-          current_assign: "",
+          current_assign: "62b522f33f7410cafb1af062",
           weight: i.weight,
           status: 0, // status is default 0 for issue
         });

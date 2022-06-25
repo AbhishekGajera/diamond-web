@@ -17,8 +17,9 @@ function StockList() {
     const [loaded, setLoaded] = useState(false);
 
     const getData = async () => {
-        const st0kes = await fetchStoke(1000, 1);
-        setdataList(st0kes?.data?.results);
+        const stokes = await fetchStoke(1000, 1);
+        console.log("stks",stokes?.data)
+        setdataList(stokes?.data?.results);
         setLoaded(true);
     };
     
@@ -69,7 +70,17 @@ function StockList() {
           case 1:
             return "Receive";
           default:
-            return "Issue";
+            return "";
+        }
+      };
+      const formatedType = (selectType) => {
+        switch (selectType) {
+          case 0:
+            return "Outside";
+          case 1:
+            return "Inside";
+          default:
+            return "";
         }
       };
 
@@ -122,6 +133,8 @@ function StockList() {
                                     <th>Id</th>
                                     <th>Lot No</th>
                                     <th>Stone Id</th>
+                                    <th>Stock Type</th>
+                                    <th>Weight</th>
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>Party</th>
@@ -135,6 +148,8 @@ function StockList() {
                                         <td>{index + 1}</td>
                                         <th>{item?.lot_no}</th>
                                         <td>{item?.stone_id}</td>
+                                        <td>{formatedType(item?.stock_type)}</td>
+                                        <td>{item?.weight}</td>
                                         <td>{item?.defaultDate}</td>
                                         <td>{formatedStatus(item?.status)}</td>
                                         <td>{item?.party?.name}</td>

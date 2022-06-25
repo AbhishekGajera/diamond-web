@@ -34,7 +34,7 @@ const IssuesForm = ({ partyList, generateStock }) => {
       if(i.stoneId && i.weight){
         const data = JSON.stringify({
           lot_no: "",
-          stock_type : "",
+          stock_type : 1,
           stone_id: i.stoneId,
           party: selectedParty,
           current_assign: selectedParty,
