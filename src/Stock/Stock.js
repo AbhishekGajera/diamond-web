@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { addStoke, fetchParty } from "../Services";
+import { addStoke, fetchOutsideParty, fetchParty } from "../Services";
 import IssuesForm from "./IssuesForm/issue";
 import RecieveForm from "./RecieveForm";
 import InsideForm from "./StocksForm/InsideForm";
@@ -13,6 +13,7 @@ function Stock() {
   const [stockType, setStockType] = useState("");
 
   const [partyList, setpartyList] = useState([]);
+  const [outsidePartyList, setoutsidePartyList] = useState([])
 
   const data = {
     LotNo: "",
@@ -23,19 +24,15 @@ function Stock() {
   };
 
   const [stock, setStock] = useState(data);
-  const { LotNo, stoneId, status, party,current_assign } = stock;
-
-  const onInputChange = (e) => {
-    setStock({ ...stock, [e.target.name]: e.target.value });
-  };
 
   // get party list
   useEffect(() => {
     (async () => {
       const parties = await fetchParty(1000, 1, "");
-      setpartyList(parties?.data?.results); 
-      setStock({ ...stock, party: parties?.data?.results[0]?.id,current_assign:parties?.data?.results[0]?.id,current_assign: parties?.data?.results[0]?.id });
+      const outsideparties = await fetchOutsideParty(1000, 1, "",0);
 
+      setpartyList(parties?.data?.results); 
+      setoutsidePartyList(outsideparties?.data?.results)
     })();
   }, []);
 
@@ -43,46 +40,10 @@ function Stock() {
     navigate("/stocklist");
   };
 
-  // const validation = () => {
-  //   if (!LotNo) {
-  //     alert("Please add Lot No");
-  //     return false;
-  //   }
-  //   if (!stoneId) {
-  //     alert("Stone Id is required");
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-  // API doesn't have string that's why convert into numbers
-  const formateSelectedType = (selectType) => {
-    switch (selectType) {
-      case "issue":
-        return 0;
-      case "receive":
-        return 1;
-      default:
-        return 0;
-    }
-  };
-
-  const formatedStatus = (selectType) => {
-    switch (selectType) {
-      case 0:
-        return "Issue";
-      case 1:
-        return "Receive";
-      default:
-        return "Issue";
-    }
-  };
 
   const generateStock = (data) => {
-    // console.log("mydata",stock)
-    console.log("data",data)
     addStoke(data).finally(() => {
-      getData(), setStock({ ...stock, LotNo: "", stoneId: "" });
+      getData()
     });
   };
 
@@ -176,7 +137,7 @@ function Stock() {
 
               {stockType === "Receive" && <RecieveForm  generateStock={generateStock} partyList={partyList}/>}
 
-              {stockType === "outside" && <OutSideForm generateStock={generateStock} partyList={partyList} />}
+              {stockType === "outside" && <OutSideForm generateStock={generateStock} partyList={outsidePartyList} />}
 
               {stockType === "inside" && <InsideForm generateStock={generateStock} />}
             </div>

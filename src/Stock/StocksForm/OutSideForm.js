@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import useFocusNext from '../../Hooks/useFocusNext'
 
 const OutSideForm = ({ partyList, generateStock }) => {
   // party change handler for selectBox
-  const [selectedParty, setselectedParty] = useState(partyList[0].id);
+  const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
+  const focusNextRef = useFocusNext();
+  
 
   // onchange events save in state
   const [value, setvalue] = useState([
@@ -12,8 +15,6 @@ const OutSideForm = ({ partyList, generateStock }) => {
       weight: "",
     },
   ]);
-
-  const { stoneId } = value;
 
   const onInputChange = (ids, name, values) => {
     const filteredData = value?.map((i) => {
@@ -83,20 +84,18 @@ const OutSideForm = ({ partyList, generateStock }) => {
         <div className="form-group col-md-4">
         </div>
       </div>
-        {value?.map((i) => {
+        {value?.map((i,index) => {
           return (
-            <div className="d-flex">
+            <div className="d-flex" key={index}>
               <div className="form-group mr-20">
                 <input
                   type="text"
                   className="form-control  mb-4"
                   name="stoneId"
-                  onChange={(e) =>
-                    onInputChange(i.id, e?.target?.name, e?.target?.value)
-                  }
+                  ref={focusNextRef}
                   placeholder="Enter stoneId"
                   required=""
-                  onKeyPress={(e) => e.key === 'Enter' && appendRowHandler()}
+                  value={i.stoneId}
                 />
               </div>
               <div className="form-group mr-20">
@@ -109,7 +108,9 @@ const OutSideForm = ({ partyList, generateStock }) => {
                   }
                   placeholder="Enter Weight"
                   required=""
-                  onKeyPress={(e) => e.key === 'Enter' && appendRowHandler()}
+                  onKeyPress={(e) => e.keyCode === 13 && appendRowHandler()}
+                  ref={focusNextRef}
+                  value={i.weight}
                 />
               </div>
 
@@ -125,7 +126,7 @@ const OutSideForm = ({ partyList, generateStock }) => {
         })}
       </div>
       <div className="form-group">
-        <button className="btn btn-success" onClick={appendRowHandler}>
+        <button className="btn btn-success" id="append-btn" onClick={appendRowHandler}>
           Add Stone Id/weight
         </button>
       </div>

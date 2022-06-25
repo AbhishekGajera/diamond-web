@@ -1,8 +1,7 @@
 import React,{useState ,useEffect} from 'react'
 import ReactLoader from 'react-loader';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-    deleteStock,
     fetchStoke,
     updateStock,
   } from "../Services";
@@ -12,27 +11,34 @@ function StockList() {
 
     const [valurToEdit, setvalurToEdit] = useState({})
     const [isOpenModel, setisOpenModel] = useState(false)
-    const [searchTerm, setSearchTerm] = useState("");
     const [dataList, setdataList] = useState([]);
     const [loaded, setLoaded] = useState(false);
 
+    const navigate = useNavigate()
+
     const getData = async () => {
         const stokes = await fetchStoke(1000, 1);
-        console.log("stks",stokes?.data)
-        setdataList(stokes?.data?.results);
+        const data = []
+        
+        stokes?.data?.results?.map((item) => {
+            const elm = data.find(element=> element?.party?.name === item?.party?.name)
+            if(!elm){
+                item.total = 1
+                data.push(item)
+            }
+            else {
+                const currentDetails = data.findIndex(element=> element?.party?.name === item?.party?.name)
+                data[currentDetails].total = data[currentDetails]?.total + 1 
+            }
+        })
+
+        setdataList(data);
         setLoaded(true);
     };
     
     useEffect(() => {
         getData()
-    }, [searchTerm])
-
-    const onClickEdit = (id) => {
-        setvalurToEdit(id)
-        setTimeout(() => {
-          setisOpenModel(true)
-        }, 700);
-    };
+    }, [])
 
     const onChangeHandlerForEdit = (e) => {
         setvalurToEdit({ ...valurToEdit,  [e.target.name]: e.target.value })
@@ -41,15 +47,6 @@ function StockList() {
     const modalClose = () => {
         setisOpenModel(false)
     }
-    
-    // delete party with confirmation
-    const onClickHandler = (id) => {
-        if (window.confirm("Are you sure want to delete this User ?")) {
-          deleteStock(id).finally(() => {
-            getData(), setStock({ ...stock, LotNo: "", stoneId: "" });
-          });
-        }
-    };
     
 
      // update status
@@ -61,6 +58,10 @@ function StockList() {
         updateStock(data).finally(() => {
         getData(), setStock({ ...stock, LotNo: "", stoneId: "" }), setvalurToEdit({}), setisOpenModel(false)
         });
+    }
+
+    const onClickView = (item) => {
+        navigate(`/stocklist/${item?.party?.id}/${item?.party?.name}`)
     }
 
     const formatedStatus = (selectType) => {
@@ -116,27 +117,11 @@ function StockList() {
                     <div className="row">
                         <div className="col-md-12 margin15" style={{ border: "1px solid rgb(206, 200, 200)" }}>
                             <h5 className="text-center  ml-4 mb-5 mt-4">Stock</h5>
-                            <div>
-                                <input
-                                type="text"
-                                className="form-control outline-gray bg-transparent border-0"
-                                placeholder="Search Stock"
-                                value={searchTerm}
-                                onChange={(e) => {
-                                    setSearchTerm(e?.target?.value);
-                                }}
-                                />
-                            </div>
                             <table className="table table-hover mb-5 margin15">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Lot No</th>
-                                    <th>Stone Id</th>
-                                    <th>Stock Type</th>
-                                    <th>Weight</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
+                                    <th>Total Diamond</th>
                                     <th>Party</th>
                                     <th>Action</th>
                                 </tr>
@@ -146,25 +131,14 @@ function StockList() {
                                     return (
                                     <tr>
                                         <td>{index + 1}</td>
-                                        <th>{item?.lot_no}</th>
-                                        <td>{item?.stone_id}</td>
-                                        <td>{formatedType(item?.stock_type)}</td>
-                                        <td>{item?.weight}</td>
-                                        <td>{item?.defaultDate}</td>
-                                        <td>{formatedStatus(item?.status)}</td>
+                                        <th>{item?.total}</th>
                                         <td>{item?.party?.name}</td>
                                         <td>
                                         <button
                                             className="btn btn-success mx-15"
-                                            onClick={() => onClickEdit(item)}
+                                            onClick={() => onClickView(item)}
                                         >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="btn btn-danger mx-15"
-                                            onClick={() => onClickHandler(item?.id)}
-                                        >
-                                            Delete
+                                            View
                                         </button>
                                         </td>
                                     </tr>

@@ -94,3 +94,7 @@ table, th, td {
   display: flex;
   align-items: center;
 }
+
+.justify-content-center {
+  justify-content: center;
+}
