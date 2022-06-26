@@ -13,6 +13,6 @@ export const getStockById = (id) => api(`stockById/${id}`,'GET')
 export const addStoke = (data) => api(`add-stock`,'POST',data);
 export const fetchStoke = (limit = 1000, page = 1) => api(`fetch-stock?limit=${limit}&page${page}&custom=true`, 'GET');
 export const deleteStock = (id) => api(`delete-stock/${id}`,'GET')
-export const getStockByParty = (id) => api(`fetch-stock?party=${id}`,'GET')
+export const getStockByParty = (id,limit=1000,page=1) => api(`fetch-stock?party=${id}&limit=${limit}&page${page}`,'GET')
 export const updateStock = (data) => api(`update-stock`,'PATCH',data)
 export const fetchUniqueStocks = () => api(`fetch-unique-stocks`, 'GET');

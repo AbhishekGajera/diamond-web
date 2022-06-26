@@ -15,7 +15,7 @@ const StockListById = () => {
 
   const getData = async () => {
     setLoaded(true);
-    const response = await getStockByParty(id);
+    const response = await getStockByParty(id,1000,1);
     setdataList(response?.data?.results);
   };
 
