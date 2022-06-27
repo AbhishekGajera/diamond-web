@@ -66,7 +66,6 @@ const StockListById = () => {
                   <th>Stock Type</th>
                   <th>Weight</th>
                   <th>Date</th>
-                  <th>Party</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -80,7 +79,6 @@ const StockListById = () => {
                       <td>{formatedType(item?.stock_type)}</td>
                       <td>{item?.weight}</td>
                       <td>{item?.defaultDate}</td>
-                      <td>{item?.party?.name}</td>
                       <td>
                         <button
                           className="btn btn-danger mx-15"
