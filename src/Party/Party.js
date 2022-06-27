@@ -10,11 +10,12 @@ function Party() {
     partyName: "",
     phoneNo: "",
     description: "",
+    outsideParty:"0"
   }
 
   const [party, setParty] = useState(defaultValue);
 
-  const { partyName, phoneNo, description } = party;
+  const { partyName, phoneNo, description,outsideParty } = party;
 
   const onInputChange = (e) => {
     setParty({ ...party, [e.target.name]: e.target.value });
@@ -48,6 +49,7 @@ function Party() {
         name: partyName,
         mobileno: phoneNo,
         description: description,
+        outsideParty: outsideParty,
         type: partyId == 2 ? "0" : "1"
       });
       createParty(data).finally(() => { getData() })
@@ -110,6 +112,19 @@ function Party() {
                 required=""
               />
             </div>
+            {partyId === '2' && (
+            <div className="form-group">
+              <label>Select outsideParty</label>
+              <select
+                name="outsideParty"
+                className="form-control  mb-4"
+                onChange={onInputChange}
+              >
+                <option value="0">job work</option>
+                <option value="1">mechant</option>
+              </select>
+            </div>
+            )}
             <button
               type="submit"
               className="btn btn-primary mb-2 btn-custom"
