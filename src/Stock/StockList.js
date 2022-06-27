@@ -31,14 +31,14 @@ function StockList() {
                 data[currentDetails].total = data[currentDetails]?.total + 1
             }
         })
-        console.log("mydata", data)
+        // console.log("mydata", data)
         let gtotal = 0
         const arr = data.map(item => {
             gtotal = gtotal + parseInt(item.total)
             return item
         })
         data.push({ gtotal })
-        console.log(arr);
+        // console.log(arr);
         setdataList(data);
         setLoaded(true);
     };
@@ -92,6 +92,17 @@ function StockList() {
         }
     };
 
+    const fomatedParty = (selectOutsideParty) => {
+        switch (selectOutsideParty) {
+            case 0:
+                return "(Job-Work)";
+            case 1:
+                return "(Merchant)";
+            default:
+                return "()";
+        }
+    }
+
     return (
         <>
             <Modal show={isOpenModel} handleClose={modalClose}>
@@ -131,7 +142,6 @@ function StockList() {
                                         <th>Total Diamond</th>
                                         <th>Party</th>
                                         <th>Type</th>
-
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -140,11 +150,10 @@ function StockList() {
                                         return (
 
                                             <tr>
-                                                <td>{item.gtotal == undefined || null ? index + 1 : ""}</td>
+                                                <td>{item.gtotal == undefined || null ? index + 1 : <b>Total Diamonds</b>}</td>
                                                 <th>{item?.total !== undefined || null ? item?.total : item.gtotal}</th>
-
                                                 <td>{item?.party?.name}</td>
-                                                <td>{formatedType(item?.stock_type)}</td>
+                                                <td>{formatedType(item?.stock_type)} {fomatedParty(item?.outsideParty)}</td>
                                                 <td>
                                                     {item.gtotal == undefined || null ?
                                                         (<button
@@ -155,7 +164,6 @@ function StockList() {
                                                         </button>) : null}
                                                 </td>
                                             </tr>
-
 
                                         );
                                     })}

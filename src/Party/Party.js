@@ -49,7 +49,7 @@ function Party() {
         name: partyName,
         mobileno: phoneNo,
         description: description,
-        outsideParty: outsideParty,
+        outsideParty: partyId == 2 ? outsideParty : "",
         type: partyId == 2 ? "0" : "1"
       });
       createParty(data).finally(() => { getData() })

@@ -45,9 +45,8 @@ function PartyList() {
             partyId: valurToEdit?.id,
             type: valurToEdit?.status
           })
-          console.log("data",data)
-        updateParty(data).finally(() => {
-        getData(), setvalurToEdit({}), setisOpenModel(false)
+            updateParty(data).finally(() => {
+            getData(), setvalurToEdit({}), setisOpenModel(false)
         });
     }
 

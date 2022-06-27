@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { addStoke, fetchOutsideParty, fetchParty } from "../Services";
+import ExportForm from "./ExportForm/Export";
 import IssuesForm from "./IssuesForm/issue";
 import RecieveForm from "./RecieveForm";
 import InsideForm from "./StocksForm/InsideForm";
@@ -93,7 +94,15 @@ function Stock() {
                 Generate Receive Stock
               </button>
             </div>
-            <div className="col-md-4"></div>
+            <div className="col-md-1">
+              <button 
+                className="btn btn-warning"
+                onClick={() => {
+                  setStockType("export");
+                }}
+                >Export</button>
+            </div>
+            <div className="col-md-3"></div>
           </div>
         )}
         {stockId === "1" && (
@@ -127,7 +136,7 @@ function Stock() {
             <div className="col-md-3"></div>
             <div className="col-md-6" style={{ border: "1px solid rgb(206 200 200)" }}>
               <h4 className="text-center  ml-4 mb-5 mt-4">
-                {stockId === "1" ? "Create Outside Stock" : ""}
+                {stockId === "1" ? `Create ${stockType} Stock` : ""}
                 {stockType !== "" && stockId === "2"
                   ? `Create ${stockType} Stock`
                   : ""}{" "}
@@ -140,6 +149,8 @@ function Stock() {
               {stockType === "outside" && <OutSideForm generateStock={generateStock} partyList={outsidePartyList} />}
 
               {stockType === "inside" && <InsideForm generateStock={generateStock} />}
+
+              {stockType === "export" && <ExportForm />}
             </div>
             <div className="col-md-3"></div>
           </div>

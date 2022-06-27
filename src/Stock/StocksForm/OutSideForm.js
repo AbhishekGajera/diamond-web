@@ -42,7 +42,6 @@ const OutSideForm = ({ partyList, generateStock }) => {
         generateStock(data);
       }
     })  
-    generateStock(data);
   };
 
   const appendRowHandler = () => {
@@ -96,6 +95,9 @@ const OutSideForm = ({ partyList, generateStock }) => {
                   placeholder="Enter stoneId"
                   required=""
                   value={i.stoneId}
+                  onChange={(e) =>
+                    onInputChange(i.id, e?.target?.name, e?.target?.value)
+                  }
                 />
               </div>
               <div className="form-group mr-20">

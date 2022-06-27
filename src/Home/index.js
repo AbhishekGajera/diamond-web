@@ -18,7 +18,7 @@ function index() {
               </div>
               <div className='row btn-custom'>
                 <div className='col-md-12'>
-                  <Link className='btn btn-primary' to='/stock'>stock Management</Link>
+                  <Link className='btn btn-primary' to='/stock'>Stock Management</Link>
                 </div>
             </div>
         </div>

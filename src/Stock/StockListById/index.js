@@ -6,7 +6,7 @@ import { getStockByParty, deleteStock } from "../../Services";
 const StockListById = () => {
   let { id, name } = useParams();
 
-  const [loaded, setLoaded] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   const [dataList, setdataList] = useState([]);
 
   useEffect(() => {
@@ -14,9 +14,9 @@ const StockListById = () => {
   }, []);
 
   const getData = async () => {
-    setLoaded(true);
     const response = await getStockByParty(id,1000,1);
     setdataList(response?.data?.results);
+    setLoaded(true);
   };
 
   const formatedType = (selectType) => {
