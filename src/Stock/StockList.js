@@ -154,6 +154,7 @@ function StockList() {
                                                 <th>{item?.total !== undefined || null ? item?.total : item.gtotal}</th>
                                                 <td>{item?.party?.name}</td>
                                                 <td>{formatedType(item?.stock_type)} {fomatedParty(item?.outsideParty)}</td>
+
                                                 <td>
                                                     {item.gtotal == undefined || null ?
                                                         (<button
