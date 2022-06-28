@@ -38,7 +38,6 @@ const ExportForm = () => {
                 stone_id: i.stoneId,
                 weight: i.weight,
               });
-              console.log("data",data)
             }
         })
     }else{

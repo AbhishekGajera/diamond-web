@@ -37,7 +37,6 @@ function Barcode() {
     await getAllProduct(
       (res) => {
         setGetbarcode(res.data.data);
-        //   console.log("res",res.data);
       },
       (err) => {
         alert(err);
@@ -321,7 +320,6 @@ function Barcode() {
                 <th>Barcode Number</th>
               </tr>
             </thead>
-            {/* {console.info("test123 ",getbarcode)}/ */}
             {getbarcode?.map((item) => {
               return (
                 <tbody id="output">

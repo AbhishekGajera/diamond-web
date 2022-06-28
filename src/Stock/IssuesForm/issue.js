@@ -70,7 +70,6 @@ const IssuesForm = ({ partyList }) => {
         stock_type: 1,
         stone_id: i.stoneId,
         party: selectedParty,
-        current_assign: selectedParty,
         weight: i.weight,
         status: 0, // status is default 0 for issue
       });

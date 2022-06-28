@@ -63,7 +63,18 @@ function PartyList() {
   // delete party with confirmation
     const onClickDeleteHandler = (id) => {
         if(window.confirm('Are you sure want to delete this User ?')){
-        deleteParty(id).finally(() => getData(), setParty(defaultValue))
+        deleteParty(id).finally(() => getData())
+        }
+    }
+
+    const fomatedParty = (selectOutsideParty) => {
+        switch (selectOutsideParty) {
+            case 0:
+                return "(Job-Work)";
+            case 1:
+                return "(Merchant)";
+            default:
+                return "";
         }
     }
 
@@ -175,7 +186,7 @@ function PartyList() {
                                 <td>{item?.name}</td>
                                 <td>{item?.mobileno}</td>
                                 <td>{item?.description}</td>
-                                <td>{formatedStatus(item?.type)}</td>
+                                <td>{formatedStatus(item?.type)} {fomatedParty(item?.outsideParty)}</td>
                                 <td>
                                     <button className="btn btn-success mr-20" onClick={() => onClickEdit(item)}>Edit</button> 
                                     <button className="btn btn-info" onClick={() => onClickDeleteHandler(item?.id)}>Delete</button>
