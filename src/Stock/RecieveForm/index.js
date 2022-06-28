@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const RecieveForm = ({ partyList }) => {
   // party change handler for selectBox
-  const [selectedParty, setselectedParty] = useState(partyList[0].id);
+  const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const focusNextRef = useFocusNext();
 
   const navigate = useNavigate()
@@ -51,7 +51,7 @@ const RecieveForm = ({ partyList }) => {
 
   const onInputChange = (ids, name, values) => {
     const filteredData = value?.map((i) => {
-      if (i.id === ids) {
+      if (i?.id === ids) {
         i[name] = values;
         if (name === "stoneId") {
           i.isGetted = false;
@@ -105,7 +105,7 @@ const RecieveForm = ({ partyList }) => {
   };
 
   const removeHandler = (id) => {
-    const filterdData = value?.filter((i) => i.id !== id);
+    const filterdData = value?.filter((i) => i?.id !== id);
     setvalue(filterdData);
   };
   return (

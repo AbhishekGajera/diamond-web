@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const IssuesForm = ({ partyList }) => {
   // party change handler for selectBox
-  const [selectedParty, setselectedParty] = useState(partyList[0].id);
+  const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const focusNextRef = useFocusNext();
 
   const navigate = useNavigate()
