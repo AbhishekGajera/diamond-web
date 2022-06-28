@@ -16,15 +16,12 @@ function Stock() {
   const [partyList, setpartyList] = useState([]);
   const [outsidePartyList, setoutsidePartyList] = useState([])
 
-  const data = {
-    LotNo: "",
-    stoneId: "",
-    party: "",
-    status: stockType,
-    current_assign:"",
-  };
-
-  const [stock, setStock] = useState(data);
+  useEffect(() => {
+    if(stockId === '1'){
+      setStockType("outside")
+    }
+  }, [stockId])
+  
 
   // get party list
   useEffect(() => {
@@ -103,23 +100,6 @@ function Stock() {
                 >Export</button>
             </div>
             <div className="col-md-3"></div>
-          </div>
-        )}
-        {stockId === "1" && (
-          <div className="row btn-custom">
-            <div className="col-md-4"></div>
-            <div className="col-md-2">
-              <button
-                className="btn btn-info"
-                onClick={() => {
-                  setStockType("outside");
-                }}
-              >
-                Generate Outside Stock
-              </button>
-            </div>
-           
-            <div className="col-md-4"></div>
           </div>
         )}
         {stockId === "1" || (stockId === "2" && stockType !== "") ? (
