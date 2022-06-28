@@ -118,16 +118,7 @@ function Stock() {
                 Generate Outside Stock
               </button>
             </div>
-            <div className="col-md-2">
-              <button 
-                className="btn btn-info"
-                onClick={() => {
-                  setStockType("inside");
-                }}
-              >
-                Generate Inside Stock
-              </button>
-            </div>
+           
             <div className="col-md-4"></div>
           </div>
         )}
@@ -146,7 +137,7 @@ function Stock() {
 
               {stockType === "Receive" && <RecieveForm  generateStock={generateStock} partyList={partyList}/>}
 
-              {stockType === "outside" && <OutSideForm generateStock={generateStock} partyList={outsidePartyList} />}
+              {stockId === "1" && <OutSideForm generateStock={generateStock} partyList={outsidePartyList} />}
 
               {stockType === "inside" && <InsideForm generateStock={generateStock} />}
 

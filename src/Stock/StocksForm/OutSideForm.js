@@ -5,6 +5,9 @@ const OutSideForm = ({ partyList, generateStock }) => {
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const focusNextRef = useFocusNext();
+  const [lotNo, setlotNo] = useState("");
+  const [partyCode, setPartyCode] = useState("");
+
   
 
   // onchange events save in state
@@ -30,10 +33,11 @@ const OutSideForm = ({ partyList, generateStock }) => {
     value?.map((i) => {
       if(i.stoneId && i.weight){
         const data = JSON.stringify({
-          lot_no: "",
+          lot_no: lotNo,
           stock_type : 0,//0 for outside
           stone_id: i.stoneId,
-          party: selectedParty,
+          party: selectedParty, 
+          party_code:partyCode,
           current_assign: selectedParty,
           weight: i.weight,
           status: 0, // status is default 0 for issue
@@ -74,8 +78,25 @@ const OutSideForm = ({ partyList, generateStock }) => {
       </div>
       <div>
       <div className='row'>
+        <div className="form-group  col-md-6">
+          <label>Party Code </label>
+          <div className="form-group mr-20">
+          <input type="text" name="partycode" className="form-control  mb-4" placeholder='Enter Party Code'
+          onChange={(e) => setPartyCode(e?.target?.value)} />
+              </div>
+        </div>
+        <div className="form-group  col-md-6">
+          <label>Lot No </label>
+          <div className="form-group mr-20">
+          <input type="text" name="lotNo" className="form-control  mb-4" placeholder='Enter Lot No'
+          onChange={(e) => setlotNo(e?.target?.value)} />
+              </div>
+        </div>
+       
+      </div>
+      <div className='row'>
         <div className="form-group  col-md-4">
-          <label>Stone Id</label>
+          <label>Stone Id </label>
         </div>
         <div className="form-group  col-md-4">
           <label>Weight</label>
