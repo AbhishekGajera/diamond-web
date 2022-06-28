@@ -56,6 +56,9 @@ table, th, td {
 .px-15 {
   padding: 0px 15px !important;
 }
+.p12{
+  padding: 12px!important;
+}
 
 .mr-20 {
   margin-right: 20px !important;
@@ -77,7 +80,7 @@ table, th, td {
   width: 60% !important;
   background: #ffffff !important;
   left: 25% !important;
-  top: 30% !important;
+  top: 5% !important;
   padding: 20px !important;
   padding-bottom: 0px !important;
 }
@@ -97,4 +100,20 @@ table, th, td {
 
 .justify-content-center {
   justify-content: center;
+}
+table{
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.text-right{
+  text-align: right;
 }

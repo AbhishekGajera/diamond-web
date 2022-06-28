@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import useFocusNext from "../../Hooks/useFocusNext";
+import Modal from "../Modal/index";
 
 const OutSideForm = ({ partyList, generateStock }) => {
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const focusNextRef = useFocusNext();
   const [lotNo, setlotNo] = useState("");
+  const [isOpenModel, setisOpenModel] = useState(false)
   const [partyCode, setPartyCode] = useState("");
 
   // bydefault select first party
@@ -41,26 +43,34 @@ const OutSideForm = ({ partyList, generateStock }) => {
     setvalue(filteredData);
   };
 
-  const onSubmitHandler = () => {
-    value?.map((i) => {
-      if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
-        const data = JSON.stringify({
-          lot_no: lotNo,
-          stock_type: 0, //0 for outside
-          stone_id: i.stoneId,
-          party: process.env.REACT_APP_DEFAULT_USER_ID,
-          party_code: partyCode,
-          current_assign: selectedParty,
-          weight: i.weight,
-          status: 0, // status is default 0 for issue
-        });
+  const modalClose = () => {
+    setisOpenModel(false)
+  }
 
-        generateStock(data);
-      }
-      else {
-        alert('Informations are not complete yet please fill all details')
-      }
-    });
+  const onSubmitHandler = () => {
+   
+    if (confirm("Print Jangad") == true) {
+      setisOpenModel(true)
+    }
+    // value?.map((i) => {
+    //   if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
+    //     const data = JSON.stringify({
+    //       lot_no: lotNo,
+    //       stock_type: 0, //0 for outside
+    //       stone_id: i.stoneId,
+    //       party: process.env.REACT_APP_DEFAULT_USER_ID,
+    //       party_code: partyCode,
+    //       current_assign: selectedParty,
+    //       weight: i.weight,
+    //       status: 0, // status is default 0 for issue
+    //     });
+
+    //     generateStock(data);
+    //   }
+    //   else {
+    //     alert('Informations are not complete yet please fill all details')
+    //   }
+    // });
   };
 
   const appendRowHandler = () => {
@@ -90,6 +100,7 @@ const OutSideForm = ({ partyList, generateStock }) => {
   }
 
   return (
+    <>
     <div>
       <div className="form-group">
         <label>Select Party</label>
@@ -199,7 +210,7 @@ const OutSideForm = ({ partyList, generateStock }) => {
         >
           Add Stone Id/weight
         </button>
-      </div>
+      </div> 
       <button
         type="submit"
         className="btn btn-primary mb-2 btn-custom"
@@ -209,6 +220,8 @@ const OutSideForm = ({ partyList, generateStock }) => {
         Submit
       </button>
     </div>
+     <Modal show={isOpenModel} handleClose={modalClose} />
+     </>
   );
 };
 
