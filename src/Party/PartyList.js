@@ -113,6 +113,14 @@ function PartyList() {
                         </select>
                     </div>
                     <br />
+                    <div className='form-group'>
+                        <label>Outside Party</label>
+                        <select style={{ minWidth : 200 }} name="outside_party" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
+                            <option value={0} selected={valurToEdit?.outsideParty === 0}>Job Work</option>
+                            <option value={1} selected={valurToEdit?.outsideParty === 1}>Merchant</option>
+                        </select>
+                    </div>
+                    <br />
 
                     <button className="btn btn-success" onClick={updateHandler}>
                         Update Party
