@@ -121,7 +121,7 @@ function Party() {
                 onChange={onInputChange}
               >
                 <option value="0">job work</option>
-                <option value="1">mechant</option>
+                <option value="1">merchant</option>
               </select>
             </div>
             )}

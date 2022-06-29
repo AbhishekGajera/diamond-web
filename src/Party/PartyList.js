@@ -1,5 +1,5 @@
-import React,{useState ,useEffect} from 'react'
-import {updateParty, deleteParty, fetchParty } from "../Services";
+import React, { useState, useEffect } from 'react'
+import { updateParty, deleteParty, fetchParty } from "../Services";
 import { Link } from 'react-router-dom';
 import Modal from "./Modal";
 import ReactLoader from 'react-loader';
@@ -15,14 +15,14 @@ function PartyList() {
 
     const formatedStatus = (selectType) => {
         switch (selectType) {
-          case 0:
-            return "Outside";
-          case 1:
-            return "Inside";
-          default:
-            return "Inside";
+            case 0:
+                return "Outside";
+            case 1:
+                return "Inside";
+            default:
+                return "Inside";
         }
-      };
+    };
     useEffect(() => {
         getData()
     }, [searchTerm])
@@ -30,12 +30,12 @@ function PartyList() {
     const onClickEdit = (id) => {
         setvalurToEdit(id)
         setTimeout(() => {
-          setisOpenModel(true)
+            setisOpenModel(true)
         }, 700);
     };
 
     const onChangeHandlerForEdit = (e) => {
-        setvalurToEdit({ ...valurToEdit,  [e.target.name]: e.target.value })
+        setvalurToEdit({ ...valurToEdit, [e.target.name]: e.target.value })
     }
 
     const updateHandler = () => {
@@ -46,14 +46,14 @@ function PartyList() {
             partyId: valurToEdit?.id,
             outsideParty: valurToEdit?.type === 0 ? outsideParty : "",
             type: valurToEdit?.type
-          })
-            updateParty(data).finally(() => {
+        })
+        updateParty(data).finally(() => {
             getData(), setvalurToEdit({}), setisOpenModel(false)
         });
     }
 
     const getData = async () => {
-        const result = await fetchParty(1000,1,searchTerm)
+        const result = await fetchParty(1000, 1, searchTerm)
         setdata(result?.data?.results)
         setLoaded(true)
     }
@@ -61,11 +61,11 @@ function PartyList() {
     const modalClose = () => {
         setisOpenModel(false)
     }
-    
-  // delete party with confirmation
+
+    // delete party with confirmation
     const onClickDeleteHandler = (id) => {
-        if(window.confirm('Are you sure want to delete this User ?')){
-        deleteParty(id).finally(() => getData())
+        if (window.confirm('Are you sure want to delete this User ?')) {
+            deleteParty(id).finally(() => getData())
         }
     }
 
@@ -84,7 +84,7 @@ function PartyList() {
         <>
             <Modal show={isOpenModel} handleClose={modalClose}>
                 <div>
-                <h4 className="mt-3 text-success mb-4">Update Party</h4>
+                    <h4 className="mt-3 text-success mb-4">Update Party</h4>
                     <div className="form-group">
                         <label>Name</label>
                         <input
@@ -120,19 +120,20 @@ function PartyList() {
                     </div>
                     <div className='form-group'>
                         <label>Type</label>
-                        <select style={{ minWidth : 200 }} name="type" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
+                        <select style={{ minWidth: 200 }} name="type" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
                             <option value={0} selected={valurToEdit?.type === 0}>Outside</option>
                             <option value={1} selected={valurToEdit?.type === 1}>Inside</option>
                         </select>
                     </div>
                     <br />
-                    <div className='form-group'>
+                    {valurToEdit?.type === 0 ? (<div className='form-group'>
                         <label>Outside Party</label>
-                        <select style={{ minWidth : 200 }} name="outsideParty" className="form-control btn-custom" onChange={(e)=>setoutsideParty(e.target.value)}>
+                        <select style={{ minWidth: 200 }} name="outsideParty" className="form-control btn-custom" onChange={(e) => setoutsideParty(e.target.value)}>
                             <option value={0} selected={valurToEdit?.outsideParty === 0}>Job Work</option>
                             <option value={1} selected={valurToEdit?.outsideParty === 1}>Merchant</option>
                         </select>
-                    </div>
+                    </div>) : ''}
+
                     <br />
 
                     <button className="btn btn-success" onClick={updateHandler}>
@@ -154,49 +155,49 @@ function PartyList() {
                         <div className='col-md-4'></div>
                     </div>
                     <div className="row margin15 p0">
-                        <div className="col-md-12"  style={{ border: "1px solid rgb(206, 200, 200)" }}>
-                        <div className="d-flex">
-                            <h5 className="text-center  ml-4 mb-5 mt-4 mr-20">Party List</h5>
-                            <div className="mb-5 mt-4 margin15">
-                            <input
-                                type="text"
-                                className="form-control outline-gray bg-transparent border-0"
-                                placeholder="Search party by name"
-                                value={searchTerm}
-                                onChange={(e) => {
-                                setSearchTerm(e?.target?.value);
-                                }}
-                            />
+                        <div className="col-md-12" style={{ border: "1px solid rgb(206, 200, 200)" }}>
+                            <div className="d-flex">
+                                <h5 className="text-center  ml-4 mb-5 mt-4 mr-20">Party List</h5>
+                                <div className="mb-5 mt-4 margin15">
+                                    <input
+                                        type="text"
+                                        className="form-control outline-gray bg-transparent border-0"
+                                        placeholder="Search party by name"
+                                        value={searchTerm}
+                                        onChange={(e) => {
+                                            setSearchTerm(e?.target?.value);
+                                        }}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <table className="table table-hover mb-5">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Phone No</th>
-                                <th>Description</th>
-                                <th>Type</th>
+                            <table className="table table-hover mb-5">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Phone No</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
 
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {data?.map((item,index) => {
-                                return  <tr>
-                                <td>{index+1}</td>
-                                <td>{item?.name}</td>
-                                <td>{item?.mobileno}</td>
-                                <td>{item?.description}</td>
-                                <td>{formatedStatus(item?.type)} {fomatedParty(item?.outsideParty)}</td>
-                                <td>
-                                    <button className="btn btn-success mr-20" onClick={() => onClickEdit(item)}>Edit</button> 
-                                    <button className="btn btn-info" onClick={() => onClickDeleteHandler(item?.id)}>Delete</button>
-                                </td>
-                            </tr>
-                            })}
-                            </tbody>
-                        </table>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data?.map((item, index) => {
+                                        return <tr>
+                                            <td>{index + 1}</td>
+                                            <td>{item?.name}</td>
+                                            <td>{item?.mobileno}</td>
+                                            <td>{item?.description}</td>
+                                            <td>{formatedStatus(item?.type)} {fomatedParty(item?.outsideParty)}</td>
+                                            <td>
+                                                <button className="btn btn-success mr-20" onClick={() => onClickEdit(item)}>Edit</button>
+                                                <button className="btn btn-info" onClick={() => onClickDeleteHandler(item?.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
