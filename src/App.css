@@ -117,3 +117,18 @@ table{
 .text-right{
   text-align: right;
 }
+
+.jangadDetail table tr input{
+  border: none;
+  outline: none;
+  width: 100%;
+}
+.jangadDetail table thead th,
+.jangadDetail table tr th,
+.jangadDetail table tbody td{
+  text-align: center;
+}
+
+.jangadDetail table tr td{
+  width: 80px;
+}

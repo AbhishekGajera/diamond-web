@@ -118,7 +118,7 @@ function Stock() {
 
               {stockType === "Receive" && <RecieveForm  generateStock={generateStock} partyList={partyList}/>}
 
-              {stockId === "1" && <OutSideForm generateStock={generateStock} partyList={partyList} />}
+              {stockId === "1" && <OutSideForm  partyList={outsidePartyList} />}
 
               {stockType === "inside" && <InsideForm generateStock={generateStock} />}
 

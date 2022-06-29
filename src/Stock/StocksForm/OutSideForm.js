@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import useFocusNext from "../../Hooks/useFocusNext";
+import { addStoke } from "../../Services";
 import Modal from "../Modal/index";
 
-const OutSideForm = ({ partyList, generateStock }) => {
+const OutSideForm = ({ partyList }) => {
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const focusNextRef = useFocusNext();
   const [lotNo, setlotNo] = useState("");
   const [isOpenModel, setisOpenModel] = useState(false)
   const [partyCode, setPartyCode] = useState("");
+  const [stockDetail, setstockDetail] = useState([]);
+  const [partyName, setpartyName] = useState([]);
+
+  var jangadDetail = [];
 
   // bydefault select first party
   useEffect(() => {
     setselectedParty(partyList[0]?.id);
+    setpartyName(partyList[0]?.name)
     if (partyList[0]) {
       let nfn = partyList[0]?.name.match(/\b(\w)/g);
       if (nfn != null) {
@@ -48,10 +54,7 @@ const OutSideForm = ({ partyList, generateStock }) => {
   }
 
   const onSubmitHandler = () => {
-   
-    // if (confirm("Print Jangad") == true) {
-    //   setisOpenModel(true)
-    // }
+    
     value?.map((i) => {
       if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
         const data = JSON.stringify({
@@ -64,13 +67,18 @@ const OutSideForm = ({ partyList, generateStock }) => {
           weight: i.weight,
           status: 0, // status is default 0 for issue
         });
-
-        generateStock(data);
+        addStoke(data).finally(() => {
+            jangadDetail.push(JSON.parse(data))
+        });
       }
       else {
         alert('Informations are not complete yet please fill all details')
       }
-    });
+    });  
+    if (confirm("Print Jangad") == true) {
+      setstockDetail(jangadDetail)
+      setisOpenModel(true)
+    }                                      
   };
 
   const appendRowHandler = () => {
@@ -90,6 +98,7 @@ const OutSideForm = ({ partyList, generateStock }) => {
   function func(data) {
     const itemValue = JSON.parse(data);
     setselectedParty(itemValue.id);
+    setpartyName(itemValue.name)
     let nfn = itemValue.name.match(/\b(\w)/g);
     if (nfn != null) {
       const Pname = nfn[0] + (nfn[1] || "");
@@ -220,7 +229,9 @@ const OutSideForm = ({ partyList, generateStock }) => {
         Submit
       </button>
     </div>
-     <Modal show={isOpenModel} handleClose={modalClose} />
+    {isOpenModel &&
+      <Modal show={isOpenModel} data={stockDetail} partyName={partyName} handleClose={modalClose} />
+    } 
      </>
   );
 };
