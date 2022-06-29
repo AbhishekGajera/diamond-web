@@ -20,6 +20,7 @@ function Stock() {
     if(stockId === '1'){
       setStockType("outside")
     }
+    console.info(outsidePartyList)
   }, [stockId])
   
 
@@ -117,7 +118,7 @@ function Stock() {
 
               {stockType === "Receive" && <RecieveForm  generateStock={generateStock} partyList={partyList}/>}
 
-              {stockId === "1" && <OutSideForm generateStock={generateStock} partyList={outsidePartyList} />}
+              {stockId === "1" && <OutSideForm generateStock={generateStock} partyList={partyList} />}
 
               {stockType === "inside" && <InsideForm generateStock={generateStock} />}
 
