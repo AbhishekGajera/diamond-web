@@ -49,28 +49,28 @@ const OutSideForm = ({ partyList, generateStock }) => {
 
   const onSubmitHandler = () => {
    
-    if (confirm("Print Jangad") == true) {
-      setisOpenModel(true)
-    }
-    // value?.map((i) => {
-    //   if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
-    //     const data = JSON.stringify({
-    //       lot_no: lotNo,
-    //       stock_type: 0, //0 for outside
-    //       stone_id: i.stoneId,
-    //       party: process.env.REACT_APP_DEFAULT_USER_ID,
-    //       party_code: partyCode,
-    //       current_assign: selectedParty,
-    //       weight: i.weight,
-    //       status: 0, // status is default 0 for issue
-    //     });
+    // if (confirm("Print Jangad") == true) {
+    //   setisOpenModel(true)
+    // }
+    value?.map((i) => {
+      if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
+        const data = JSON.stringify({
+          lot_no: lotNo,
+          stock_type: 0, //0 for outside
+          stone_id: i.stoneId,
+          party: process.env.REACT_APP_DEFAULT_USER_ID,
+          party_code: partyCode,
+          current_assign: selectedParty,
+          weight: i.weight,
+          status: 0, // status is default 0 for issue
+        });
 
-    //     generateStock(data);
-    //   }
-    //   else {
-    //     alert('Informations are not complete yet please fill all details')
-    //   }
-    // });
+        generateStock(data);
+      }
+      else {
+        alert('Informations are not complete yet please fill all details')
+      }
+    });
   };
 
   const appendRowHandler = () => {
