@@ -7,6 +7,7 @@ import ReactLoader from 'react-loader';
 function PartyList() {
 
     const [valurToEdit, setvalurToEdit] = useState({})
+    const [outsideParty, setoutsideParty] = useState(0)
     const [isOpenModel, setisOpenModel] = useState(false)
     const [searchTerm, setSearchTerm] = useState("");
     const [data, setdata] = useState([])
@@ -43,7 +44,8 @@ function PartyList() {
             mobileno: valurToEdit?.mobileno,
             description: valurToEdit?.description,
             partyId: valurToEdit?.id,
-            type: valurToEdit?.status
+            outsideParty: valurToEdit?.type === 0 ? outsideParty : "",
+            type: valurToEdit?.type
           })
             updateParty(data).finally(() => {
             getData(), setvalurToEdit({}), setisOpenModel(false)
@@ -118,7 +120,7 @@ function PartyList() {
                     </div>
                     <div className='form-group'>
                         <label>Type</label>
-                        <select style={{ minWidth : 200 }} name="status" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
+                        <select style={{ minWidth : 200 }} name="type" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
                             <option value={0} selected={valurToEdit?.type === 0}>Outside</option>
                             <option value={1} selected={valurToEdit?.type === 1}>Inside</option>
                         </select>
@@ -126,7 +128,7 @@ function PartyList() {
                     <br />
                     <div className='form-group'>
                         <label>Outside Party</label>
-                        <select style={{ minWidth : 200 }} name="outside_party" className="form-control btn-custom" onChange={onChangeHandlerForEdit}>
+                        <select style={{ minWidth : 200 }} name="outsideParty" className="form-control btn-custom" onChange={(e)=>setoutsideParty(e.target.value)}>
                             <option value={0} selected={valurToEdit?.outsideParty === 0}>Job Work</option>
                             <option value={1} selected={valurToEdit?.outsideParty === 1}>Merchant</option>
                         </select>
