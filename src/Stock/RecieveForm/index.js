@@ -4,13 +4,21 @@ import { getStockById, updateStock } from "../../Services";
 import useFocusNext from '../../Hooks/useFocusNext'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Modal from "../Modal/index";
+
 
 const RecieveForm = ({ partyList }) => {
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
+  const [stockDetail, setstockDetail] = useState([]);
+  const [isOpenModel, setisOpenModel] = useState(false)
   const focusNextRef = useFocusNext();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const modalClose = () => {
+    setisOpenModel(false)
+  }
+
 
   // onchange events save in state
   const [value, setvalue] = useState([
@@ -63,7 +71,9 @@ const RecieveForm = ({ partyList }) => {
   };
 
   const onSubmitHandler = () => {
-    const id = toast.loading("Please wait...")
+    const id = toast.loading("Please wait...");
+    var jangadDetail = [];
+    const stockToUpdate = []
     const promiseArray = value?.map(async (i) => {
       const data = JSON.stringify({
         lot_no: "",
@@ -76,7 +86,9 @@ const RecieveForm = ({ partyList }) => {
       });
 
       try {
-        await updateStock(data);
+        stockToUpdate.push(updateStock(data))
+        jangadDetail.push(JSON.parse(data))
+        // await updateStock(data);
       } catch (error) {
         toast.error(`Stone id ${i.stoneId} not found`,{
           autoClose : 4000
@@ -87,7 +99,11 @@ const RecieveForm = ({ partyList }) => {
 
     Promise.all(promiseArray).finally(() => {
       toast.update(id, { render: "data updated successfully", type: "success", isLoading: false, autoClose : 4000 });
-      navigate('/stocklist')
+      if (confirm("Print Jangad") == true) {
+        setstockDetail(jangadDetail)
+        setisOpenModel(true)
+      }     
+      // navigate('/stocklist')
     });
 
   };
@@ -109,6 +125,7 @@ const RecieveForm = ({ partyList }) => {
     setvalue(filterdData);
   };
   return (
+    <>
     <div>
       <div className="form-group">
         <label>Select Party</label>
@@ -196,6 +213,10 @@ const RecieveForm = ({ partyList }) => {
         Submit
       </button>
     </div>
+     {isOpenModel &&
+      <Modal show={isOpenModel} data={stockDetail} handleClose={modalClose} />
+    } 
+     </>
   );
 };
 
