@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useFocusNext from "../../Hooks/useFocusNext";
 import { addStoke } from "../../Services";
 import Modal from "../Modal/index";
+import { toast } from "react-toastify";
 
 const OutSideForm = ({ partyList }) => {
   // party change handler for selectBox
@@ -13,7 +14,6 @@ const OutSideForm = ({ partyList }) => {
   const [stockDetail, setstockDetail] = useState([]);
   const [partyName, setpartyName] = useState([]);
 
-  var jangadDetail = [];
 
   // bydefault select first party
   useEffect(() => {
@@ -54,7 +54,9 @@ const OutSideForm = ({ partyList }) => {
   }
 
   const onSubmitHandler = () => {
-    
+    const id = toast.loading("Please wait...")
+    var jangadDetail = [];
+    const stockToCreate = []
     value?.map((i) => {
       if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
         const data = JSON.stringify({
@@ -67,18 +69,21 @@ const OutSideForm = ({ partyList }) => {
           weight: i.weight,
           status: 0, // status is default 0 for issue
         });
-        addStoke(data).finally(() => {
-            jangadDetail.push(JSON.parse(data))
-        });
+        stockToCreate.push(addStoke(data))
+        jangadDetail.push(JSON.parse(data))
       }
       else {
         alert('Informations are not complete yet please fill all details')
       }
-    });  
-    if (confirm("Print Jangad") == true) {
-      setstockDetail(jangadDetail)
-      setisOpenModel(true)
-    }                                      
+    })
+
+    Promise.all(stockToCreate).finally(() => {
+      toast.update(id, { render: "data generated successfully", type: "success", isLoading: false, autoClose : 4000 });
+      if (confirm("Print Jangad") == true) {
+        setstockDetail(jangadDetail)
+        setisOpenModel(true)
+      }                                      
+    })
   };
 
   const appendRowHandler = () => {
