@@ -13,9 +13,7 @@ const IssuesForm = ({ partyList }) => {
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const [stockDetail, setstockDetail] = useState([]);
   const [isOpenModel, setisOpenModel] = useState(false);
-const [partyName, setpartyName] = useState([]);
-
-
+  const [partyName, setpartyName] = useState([]);
 
   const focusNextRef = useFocusNext();
 
@@ -83,15 +81,13 @@ const [partyName, setpartyName] = useState([]);
 
     const promiseArray = value?.map(async (i) => {
       const data = JSON.stringify({
-        lot_no: "",
         stock_type: 1,
         stone_id: i.stoneId,
         party: selectedParty,
         weight: i.weight,
         status: 0, // status is default 0 for issue
       });
-     
-
+            
       try {
         stockToUpdate.push(updateStock(data))
         jangadDetail.push(JSON.parse(data))

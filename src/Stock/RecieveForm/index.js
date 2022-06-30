@@ -80,7 +80,6 @@ const [partyName, setpartyName] = useState([]);
     const stockToUpdate = []
     const promiseArray = value?.map(async (i) => {
       const data = JSON.stringify({
-        lot_no: "",
         stock_type: 1,
         stone_id: i.stoneId,
         party: selectedParty,

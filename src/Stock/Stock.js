@@ -20,7 +20,7 @@ function Stock() {
     if(stockId === '1'){
       setStockType("outside")
     }
-    console.info(outsidePartyList)
+    // console.info(outsidePartyList)
   }, [stockId])
   
 
