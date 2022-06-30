@@ -99,7 +99,7 @@ const Modal = ({ show, data, partyName, handleClose}) => {
                             </tr>
                             <tr></tr>
                             <tr className='text-left'>
-                                <td>GSTIN : 24ASD76kKI5685</td>
+                                <td>GSTIN : 24ABSFM5443Q1ZG</td>
                             </tr>
                         </table>
                         <table>

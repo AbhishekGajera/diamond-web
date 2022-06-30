@@ -11,7 +11,9 @@ const RecieveForm = ({ partyList }) => {
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const [stockDetail, setstockDetail] = useState([]);
-  const [isOpenModel, setisOpenModel] = useState(false)
+  const [isOpenModel, setisOpenModel] = useState(false);
+const [partyName, setpartyName] = useState([]);
+
   const focusNextRef = useFocusNext();
 
   const navigate = useNavigate();
@@ -35,6 +37,8 @@ const RecieveForm = ({ partyList }) => {
 
   // Effect for API call
   useEffect(() => {
+    setpartyName(partyList[0]?.name)
+
     // Do fetch here...
     if (value) {
       const promiseArray = value?.map(async (i) => {
@@ -214,7 +218,7 @@ const RecieveForm = ({ partyList }) => {
       </button>
     </div>
      {isOpenModel &&
-      <Modal show={isOpenModel} data={stockDetail} handleClose={modalClose} />
+      <Modal show={isOpenModel} data={stockDetail} partyName={partyName} handleClose={modalClose} />
     } 
      </>
   );
