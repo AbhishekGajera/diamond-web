@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getAllProduct } from "../Services/ApiService";
 import Barcodes from "react-barcode";
 import { toast } from "react-toastify";
+import Header from "../Header/Header";
 
 function Barcode() {
   const [barcod, setBarcod] = useState({
@@ -155,197 +156,200 @@ function Barcode() {
   };
 
   return (
-    <div className="container">
-      <h4 className="mt-3 text-success mb-4">Auto Generate Barcodes here!</h4>
-      <div className="row">
-        <div
-          className="col-md-4"
-          style={{ border: "1px solid rgb(206 200 200)" }}
-        >
-          <h5 className="text-center  ml-4 mb-5 mt-4">Generate Barcode</h5>
-          <div className="form-group">
-            <label>Enter Kapan Number</label>
-            <input
-              type="text"
-              className="form-control  mb-4"
-              value={cuttingNumber}
-              name="cuttingNumber"
-              onChange={onInputChange}
-              placeholder="Enter Kapan Number"
-              required=""
-            />
-          </div>
-          <div className="form-group">
-            <label>Enter totalWeight</label>
-            <input
-              type="text"
-              className="form-control  mb-4"
-              value={totalWeight}
-              name="totalWeight"
-              onChange={onInputChange}
-              placeholder="Enter totalWeight"
-              required=""
-            />
-          </div>
-          <div className="form-group">
-            <label>Enter total stone no to generate</label>
-            <input
-              type="text"
-              className="form-control  mb-4"
-              value={stoneNo}
-              name="stoneNo"
-              onChange={onInputChange}
-              placeholder="Enter total stone no to generate"
-              required=""
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary mb-2"
-            onClick={generateList}
-            name="submit"
+    <>
+      <Header />
+      <div className="container">
+        <h4 className="mt-3 text-success mb-4">Auto Generate Barcodes here!</h4>
+        <div className="row">
+          <div
+            className="col-md-4"
+            style={{ border: "1px solid rgb(206 200 200)" }}
           >
-            Generate list for barcodes
-          </button>
-        </div>
+            <h5 className="text-center  ml-4 mb-5 mt-4">Generate Barcode</h5>
+            <div className="form-group">
+              <label>Enter Kapan Number</label>
+              <input
+                type="text"
+                className="form-control  mb-4"
+                value={cuttingNumber}
+                name="cuttingNumber"
+                onChange={onInputChange}
+                placeholder="Enter Kapan Number"
+                required=""
+              />
+            </div>
+            <div className="form-group">
+              <label>Enter totalWeight</label>
+              <input
+                type="text"
+                className="form-control  mb-4"
+                value={totalWeight}
+                name="totalWeight"
+                onChange={onInputChange}
+                placeholder="Enter totalWeight"
+                required=""
+              />
+            </div>
+            <div className="form-group">
+              <label>Enter total stone no to generate</label>
+              <input
+                type="text"
+                className="form-control  mb-4"
+                value={stoneNo}
+                name="stoneNo"
+                onChange={onInputChange}
+                placeholder="Enter total stone no to generate"
+                required=""
+              />
+            </div>
 
-        <div className="col-md-8">
-          <table>
-            <tr>
-              <th style={{ display : 'none' }}>id</th>
-              <th>Kapan No</th>
-              <th>Total Weight</th>
-              <th>Stone</th>
-              <th>Current Weight</th>
-              <th>Stone Id</th>
-              <th>Barcode No</th>
-            </tr>
+            <button
+              type="submit"
+              className="btn btn-primary mb-2"
+              onClick={generateList}
+              name="submit"
+            >
+              Generate list for barcodes
+            </button>
+          </div>
 
-            {Array(+data?.stoneNo)
-              .fill(undefined)
-              ?.map((_, index) => {
-                return (
-                  <tr key={index}>
-                    <td style={{ display : 'none' }}>{+1 + index}</td>
-                    <td>{data?.cuttingNumber}</td>
-                    <td>{data?.totalWeight}</td>
-                    <td>
-                      <input
-                        onChange={(e) =>
-                          onChangeHandler(
-                            1 + index,
-                            e?.target?.value,
-                            e?.target?.name,
-                            (1000 + index)
-                          )
-                        }
-                        placeholder="enter stone no"
-                        defaultValue={(1000 + index)}
-                        name="stone"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        onChange={(e) =>
-                          onChangeHandler(
-                            1 + index,
-                            e?.target?.value,
-                            e?.target?.name,
-                            (1000 + index)
-                          )
-                        }
-                        placeholder="enter stone weight"
-                        name="currenteWeight"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        onChange={(e) =>
-                          onChangeHandler(
-                            1 + index,
-                            e?.target?.value,
-                            e?.target?.name,
-                            (1000 + index)
-                          )
-                        }
-                        placeholder="enter stone id"
-                        name="stoneId"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        onChange={(e) =>
-                          onChangeHandler(
-                            1 + index,
-                            e?.target?.value,
-                            e?.target?.name,
-                            (1000 + index)
-                          )
-                        }
-                        placeholder="enter barcode no"
-                        name="barcodeNo"
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            {Array(+data?.stoneNo).fill(undefined).length > 0 && (
+          <div className="col-md-8">
+            <table>
               <tr>
-                <td colspan="6">
-                  {" "}
-                  <button
-                    onClick={createAllBarcodes}
-                    className="btn btn-primary my-2"
-                  >
-                    Create All Barcodes
-                  </button>{" "}
-                </td>
-              </tr>
-            )}
-          </table>
-        </div>
-
-        <div className="col-md-12" style={{ border: "1px solid rgb(206 200 200)" }}>
-          <h5 className="text-center  ml-4 mb-5 mt-4">Barcodes</h5>
-          <table className="table table-hover mb-5">
-            <thead>
-              <tr>
-                <th>Id</th>
+                <th style={{ display : 'none' }}>id</th>
                 <th>Kapan No</th>
                 <th>Total Weight</th>
-                <th>Stone </th>
+                <th>Stone</th>
                 <th>Current Weight</th>
                 <th>Stone Id</th>
-                <th>Barcode Number</th>
+                <th>Barcode No</th>
               </tr>
-            </thead>
-            {getbarcode?.map((item) => {
-              return (
-                <tbody id="output">
-                  <tr>
-                    <td>1</td>
-                    <td>{item.cuttingno}</td>
-                    <td>{item.totalweight}</td>
-                    <td>{item.stoneweight}</td>
-                    <td>{item.currentweight}</td>
-                    <td>{item.stoneid}</td>
-                    <td>
-                      <Barcodes
-                        value={item.barcodenumber}
-                        format="CODE39"
-                        width="1"
-                        height="30"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </table>
+
+              {Array(+data?.stoneNo)
+                .fill(undefined)
+                ?.map((_, index) => {
+                  return (
+                    <tr key={index}>
+                      <td style={{ display : 'none' }}>{+1 + index}</td>
+                      <td>{data?.cuttingNumber}</td>
+                      <td>{data?.totalWeight}</td>
+                      <td>
+                        <input
+                          onChange={(e) =>
+                            onChangeHandler(
+                              1 + index,
+                              e?.target?.value,
+                              e?.target?.name,
+                              (1000 + index)
+                            )
+                          }
+                          placeholder="enter stone no"
+                          defaultValue={(1000 + index)}
+                          name="stone"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          onChange={(e) =>
+                            onChangeHandler(
+                              1 + index,
+                              e?.target?.value,
+                              e?.target?.name,
+                              (1000 + index)
+                            )
+                          }
+                          placeholder="enter stone weight"
+                          name="currenteWeight"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          onChange={(e) =>
+                            onChangeHandler(
+                              1 + index,
+                              e?.target?.value,
+                              e?.target?.name,
+                              (1000 + index)
+                            )
+                          }
+                          placeholder="enter stone id"
+                          name="stoneId"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          onChange={(e) =>
+                            onChangeHandler(
+                              1 + index,
+                              e?.target?.value,
+                              e?.target?.name,
+                              (1000 + index)
+                            )
+                          }
+                          placeholder="enter barcode no"
+                          name="barcodeNo"
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              {Array(+data?.stoneNo).fill(undefined).length > 0 && (
+                <tr>
+                  <td colspan="6">
+                    {" "}
+                    <button
+                      onClick={createAllBarcodes}
+                      className="btn btn-primary my-2"
+                    >
+                      Create All Barcodes
+                    </button>{" "}
+                  </td>
+                </tr>
+              )}
+            </table>
+          </div>
+
+          <div className="col-md-12" style={{ border: "1px solid rgb(206 200 200)" }}>
+            <h5 className="text-center  ml-4 mb-5 mt-4">Barcodes</h5>
+            <table className="table table-hover mb-5">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Kapan No</th>
+                  <th>Total Weight</th>
+                  <th>Stone </th>
+                  <th>Current Weight</th>
+                  <th>Stone Id</th>
+                  <th>Barcode Number</th>
+                </tr>
+              </thead>
+              {getbarcode?.map((item) => {
+                return (
+                  <tbody id="output">
+                    <tr>
+                      <td>1</td>
+                      <td>{item.cuttingno}</td>
+                      <td>{item.totalweight}</td>
+                      <td>{item.stoneweight}</td>
+                      <td>{item.currentweight}</td>
+                      <td>{item.stoneid}</td>
+                      <td>
+                        <Barcodes
+                          value={item.barcodenumber}
+                          format="CODE39"
+                          width="1"
+                          height="30"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

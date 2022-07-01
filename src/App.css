@@ -132,3 +132,18 @@ table{
 .jangadDetail table tr td{
   width: 80px;
 }
+.navbar {
+  background-color: black;
+}
+.navbar a {
+  color: #FFFF;
+}
+.navbar-nav {
+  padding: 14px;
+}
+a.nav-item.nav-link {
+  margin-left: 28px;
+}
+a:hover {
+  text-decoration: none;
+}

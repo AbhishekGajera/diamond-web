@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import Header from '../Header/Header';
 
 function index() {
   return (
     <>
+      <Header />
         <div className='container'>
             <h4 className="mt-3 text-success mb-4">Dashboard</h4>
               <div className='row btn-custom'>

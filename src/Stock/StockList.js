@@ -2,6 +2,7 @@ import { groupBy } from 'lodash';
 import React, { useState, useEffect } from 'react'
 import ReactLoader from 'react-loader';
 import { Link, useNavigate } from 'react-router-dom';
+import Header from '../Header/Header';
 import {
     fetchStoke,
     updateStock,
@@ -122,6 +123,7 @@ function StockList() {
 
     return (
       <>
+        <Header />
         <Modal show={isOpenModel} handleClose={modalClose}>
           <div>
             <select

@@ -3,6 +3,7 @@ import { updateParty, deleteParty, fetchParty } from "../Services";
 import { Link } from 'react-router-dom';
 import Modal from "./Modal";
 import ReactLoader from 'react-loader';
+import Header from '../Header/Header';
 
 function PartyList() {
 
@@ -82,6 +83,7 @@ function PartyList() {
 
     return (
         <>
+            <Header/>
             <Modal show={isOpenModel} handleClose={modalClose}>
                 <div>
                     <h4 className="mt-3 text-success mb-4">Update Party</h4>

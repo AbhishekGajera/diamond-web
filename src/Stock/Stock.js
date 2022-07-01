@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
 import { addStoke, fetchOutsideParty, fetchParty } from "../Services";
 import ExportForm from "./ExportForm/Export";
 import IssuesForm from "./IssuesForm/issue";
@@ -48,6 +49,7 @@ function Stock() {
 
   return (
     <>
+      <Header />
       <div className="container">
         <h4 className="mt-3 text-success mb-4">Stock Management</h4>
         <div className="row btn-custom">
