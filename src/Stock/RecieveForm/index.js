@@ -37,7 +37,11 @@ const [partyName, setpartyName] = useState([]);
 
   // Effect for API call
   useEffect(() => {
-    setpartyName(partyList[0]?.name)
+    partyList.map(item => {
+      if (item.id == selectedParty) {
+        setpartyName(item.name)
+      }
+    })
 
     // Do fetch here...
     if (value) {
