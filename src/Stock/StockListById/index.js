@@ -14,6 +14,8 @@ const StockListById = () => {
   const [partyList, setpartyList] = useState([]);
   const [valurToEdit, setvalurToEdit] = useState({})
   const [isOpenModel, setisOpenModel] = useState(false)
+  const [totalInsideDiamonds, settotalInsideDiamonds] = React.useState(0)
+  const [groupedParty, setgroupedParty] = useState({})
 
   useEffect(() => {
     getData();
@@ -23,6 +25,8 @@ const StockListById = () => {
     const response = await getStockByParty(id,1000,1);
     const data = []
     setdataList(response?.data?.results);
+    settotalInsideDiamonds(response.data.results?.filter((item) => item?.stock_type === 1)?.length)
+    setgroupedParty(groupBy(response.data.results?.filter((item) => item?.stock_type === 0),'current_assign.name'))
 
     response?.data?.results?.map((item) => {
       const elm = data.find(element => element?.current_assign?.name === item?.current_assign?.name)
@@ -97,7 +101,6 @@ const StockListById = () => {
       });
     }
   };
-  let insideTotal = 0 ;
   let outsideTotal = 0;
   return (
     <>
@@ -176,12 +179,8 @@ const StockListById = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {partyList.filter(detail => detail?.party?.type == 0).map((d, ind) => {
-                       insideTotal = insideTotal + parseInt(d.total)
-                    })
-                  }
                   <tr>
-                    <th>{insideTotal}</th>
+                    <th>{totalInsideDiamonds}</th>
                   </tr>
                 </tbody>
               </table>
@@ -199,12 +198,13 @@ const StockListById = () => {
                   </tr>
                 </thead>
                 <tbody>
-                    {partyList.filter(detail => detail?.party?.type == 1).map((d, ind) => {
-                      outsideTotal = outsideTotal + parseInt(d.total)
-                      return(
-                        <tr key={ind}>
-                          <td>{d?.current_assign?.name}</td>
-                          <td>{d?.total}</td>
+                  {
+                    Object.entries(groupedParty)?.map((i,index) => {
+                      outsideTotal = outsideTotal + i[1]?.length
+                      return (
+                        <tr key={index}>
+                          <td>{i[0]}</td>
+                          <td>{i[1]?.length}</td>
                         </tr>
                       );
                     })
