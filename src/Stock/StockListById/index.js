@@ -25,7 +25,7 @@ const StockListById = () => {
     const response = await getStockByParty(id,1000,1);
     const data = []
     setdataList(response?.data?.results);
-    settotalInsideDiamonds(response.data.results?.filter((item) => item?.stock_type === 1)?.length)
+    settotalInsideDiamonds(groupBy(response.data.results?.filter((item) => item?.stock_type === 1),'current_assign.name'))
     setgroupedParty(groupBy(response.data.results?.filter((item) => item?.stock_type === 0),'current_assign.name'))
 
     response?.data?.results?.map((item) => {
@@ -101,7 +101,10 @@ const StockListById = () => {
       });
     }
   };
+
   let outsideTotal = 0;
+  let insideTotal = 0
+
   return (
     <>
       <Header />
@@ -173,14 +176,27 @@ const StockListById = () => {
             >
               <h5 className="text-center  ml-4 mb-5 mt-4">Inside</h5>
               <table className="table table-hover mb-5 margin15">
-                <thead>
+              <thead>
                   <tr>
-                    <th>Total Diamond</th>
+                    <th>Party</th>
+                    <th>Diamond</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {
+                    Object.entries(totalInsideDiamonds)?.map((i,index) => {
+                      insideTotal = insideTotal + i[1]?.length
+                      return (
+                        <tr key={index}>
+                          <td>{i[0]}</td>
+                          <td>{i[1]?.length}</td>
+                        </tr>
+                      );
+                    })
+                  }
                   <tr>
-                    <th>{totalInsideDiamonds}</th>
+                    <th>Total Diamond</th>
+                    <th>{insideTotal}</th>
                   </tr>
                 </tbody>
               </table>

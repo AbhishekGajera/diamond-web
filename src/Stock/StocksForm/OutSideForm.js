@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 const OutSideForm = ({ partyList }) => {
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
+  const [selectedPartyType, setselectedPartyType] = useState(partyList[0]?.type)
   const focusNextRef = useFocusNext();
   const [lotNo, setlotNo] = useState("");
   const [isOpenModel, setisOpenModel] = useState(false)
@@ -18,6 +19,7 @@ const OutSideForm = ({ partyList }) => {
   // bydefault select first party
   useEffect(() => {
     setselectedParty(partyList[0]?.id);
+    setselectedPartyType(partyList[0]?.type)
     setpartyName(partyList[0]?.name)
     if (partyList[0]) {
       let nfn = partyList[0]?.name.match(/\b(\w)/g);
@@ -61,7 +63,7 @@ const OutSideForm = ({ partyList }) => {
       if (i.stoneId && i.weight && selectedParty && selectedParty !== "" && process.env.REACT_APP_DEFAULT_USER_ID) {
         const data = JSON.stringify({
           lot_no: lotNo,
-          stock_type: 0, //0 for outside
+          stock_type: selectedPartyType,
           stone_id: i.stoneId,
           party: process.env.REACT_APP_DEFAULT_USER_ID,
           party_code: partyCode,
@@ -100,9 +102,11 @@ const OutSideForm = ({ partyList }) => {
     const filterdData = value?.filter((i) => i.id !== id);
     setvalue(filterdData);
   };
+
   function func(data) {
     const itemValue = JSON.parse(data);
     setselectedParty(itemValue.id);
+    setselectedPartyType(itemValue?.type)
     setpartyName(itemValue.name)
     let nfn = itemValue.name.match(/\b(\w)/g);
     if (nfn != null) {
