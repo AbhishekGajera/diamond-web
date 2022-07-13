@@ -76,3 +76,5 @@ object-assign
  *
  * @license MIT
  */
+
+//! moment.js
