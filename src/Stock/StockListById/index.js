@@ -5,6 +5,7 @@ import ReactLoader from "react-loader";
 import Modal from "../Modal";
 import Header from "../../Header/Header"
 import { getStockByParty, deleteStock, updateStock } from "../../Services";
+import moment from 'moment';
 
 const StockListById = () => {
   let { id, name } = useParams();
@@ -260,7 +261,7 @@ const StockListById = () => {
                         <td>{item?.stone_id}</td>
                         <td>{formatedType(item?.stock_type)}</td>
                         <td>{item?.weight}</td>
-                        <td>{item?.defaultDate}</td>
+                        <td>{item?.defaultDate ? moment(item?.defaultDate).format('DD-MM-YYYY') : ''}</td>
                         <td>
                           <button
                             className="btn btn-success mx-15"

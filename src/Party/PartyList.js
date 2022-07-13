@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { updateParty, deleteParty, fetchParty } from "../Services";
+import { updateParty, deleteParty, fetchParty, fetchStoke } from "../Services";
+import { groupBy } from 'lodash';
 import { Link } from 'react-router-dom';
 import Modal from "./Modal";
 import ReactLoader from 'react-loader';
@@ -11,6 +12,7 @@ function PartyList() {
     const [outsideParty, setoutsideParty] = useState(0)
     const [isOpenModel, setisOpenModel] = useState(false)
     const [searchTerm, setSearchTerm] = useState("");
+    const [groupedParty, setGroupedParty] = useState('')
     const [data, setdata] = useState([])
     const [loaded, setLoaded] = useState(false);
 
@@ -56,6 +58,9 @@ function PartyList() {
     const getData = async () => {
         const result = await fetchParty(1000, 1, searchTerm)
         setdata(result?.data?.results)
+        const stokes = await fetchStoke(1000, 1);
+        const groupedParty = groupBy(stokes?.data?.results,'current_assign.id')
+        setGroupedParty(groupedParty)
         setLoaded(true)
     }
 
@@ -179,8 +184,8 @@ function PartyList() {
                                         <th>Name</th>
                                         <th>Phone No</th>
                                         <th>Description</th>
+                                        <th>Total Diamond</th>
                                         <th>Type</th>
-
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -191,7 +196,8 @@ function PartyList() {
                                             <td>{item?.name}</td>
                                             <td>{item?.mobileno}</td>
                                             <td>{item?.description}</td>
-                                            <td>{formatedStatus(item?.type)} {fomatedParty(item?.outsideParty)}</td>
+                                            <td>{groupedParty[item?.id]?.length || 0}</td>
+                                            <td>{formatedStatus(item?.type)} {fomatedParty(item?.outsideParty)} </td>
                                             <td>
                                                 <button className="btn btn-success mr-20" onClick={() => onClickEdit(item)}>Edit</button>
                                                 <button className="btn btn-info" onClick={() => onClickDeleteHandler(item?.id)}>Delete</button>
