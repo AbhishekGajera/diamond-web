@@ -70,6 +70,7 @@ const OutSideForm = ({ partyList }) => {
           current_assign: selectedParty,
           weight: i.weight,
           status: 0, // status is default 0 for issue
+          defaultDate: new Date().toISOString()
         });
         stockToCreate.push(addStoke(data))
         jangadDetail.push(JSON.parse(data))
