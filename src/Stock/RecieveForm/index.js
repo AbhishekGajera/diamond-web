@@ -8,6 +8,8 @@ import Modal from "../Modal/index";
 
 
 const RecieveForm = ({ partyList }) => {
+  console.log("pl",partyList);
+
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const [stockDetail, setstockDetail] = useState([]);

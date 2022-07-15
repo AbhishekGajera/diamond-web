@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import useFocusNext from '../../Hooks/useFocusNext'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const ExportForm = () => {
+const ExportForm = ({ partyList }) => {
   const focusNextRef = useFocusNext();
 
   const navigate = useNavigate()
+  const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
+
 
   // onchange events save in state
   const [value, setvalue] = useState([
@@ -37,6 +40,7 @@ const ExportForm = () => {
               const data = JSON.stringify({
                 stone_id: i.stoneId,
                 weight: i.weight,
+                party: selectedParty
               });
             }
         })
@@ -64,6 +68,18 @@ const ExportForm = () => {
   return (
     <div>
       <div>
+      <div className="form-group">
+        <label>Select Party</label>
+        <select
+          name="party"
+          className="form-control  mb-4"
+          onChange={(e) => setselectedParty(e?.target?.value)}
+        >
+          {partyList?.map((item) => {
+            return <option value={item?.id}>{item?.name}</option>;
+          })}
+        </select>
+      </div>
         <div className="row">
           <div className="form-group  col-md-4">
             <label>Stone Id</label>

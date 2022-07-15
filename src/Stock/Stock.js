@@ -124,7 +124,7 @@ function Stock() {
 
               {stockType === "inside" && <InsideForm generateStock={generateStock} />}
 
-              {stockType === "export" && <ExportForm />}
+              {stockType === "export" && <ExportForm partyList={partyList} />}
             </div>
             <div className="col-md-3"></div>
           </div>
