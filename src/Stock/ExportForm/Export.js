@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import useFocusNext from '../../Hooks/useFocusNext'
+import useFocusNext from "../../Hooks/useFocusNext";
 import { useNavigate } from "react-router-dom";
+import useDebounce from "../../Hooks/useDebounce";
+import { deleteStock, exportStock, getStockById } from "../../Services";
 import { toast } from "react-toastify";
 
 const ExportForm = ({ partyList }) => {
   const focusNextRef = useFocusNext();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
-
-
+  const [partyName, setpartyName] = useState([]);
   // onchange events save in state
   const [value, setvalue] = useState([
     {
@@ -20,12 +21,53 @@ const ExportForm = ({ partyList }) => {
     },
   ]);
 
- 
+  // manage auto detect weight in debounce
+  const debounced = useDebounce(value, 1000);
+
+  // Effect for API call
+  useEffect(() => {
+    partyList.map((item) => {
+      if (item.id == selectedParty) {
+        setpartyName(item.name);
+      }
+    });
+    // Do fetch here...
+    if (value?.length > 0) {
+      const promiseArray = value?.map(async (i) => {
+        if (!i?.isGetted) {
+          try {
+            const result = await getStockById(i?.stoneId);
+            if (result?.data?.weight) {
+              i.weight = result?.data?.weight;
+              i.isGetted = true;
+              i.lot_no = result?.data?.lot_no;
+              i.status = result?.data?.status;
+              i.current_assign = result?.data?.party.id;
+              i.stock_type = result?.data?.stock_type;
+              i.stone_id = result?.data?.stone_id;
+              i.id = result?.data?.id
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        return i;
+      });
+
+      Promise.all(promiseArray).then((filteredData) => {
+        setvalue(filteredData);
+      });
+      // Triggers when "debounced" changes
+    }
+  }, [debounced]);
 
   const onInputChange = (ids, name, values) => {
     const filteredData = value?.map((i) => {
       if (i.id === ids) {
         i[name] = values;
+        if (name === "stoneId") {
+          i.isGetted = false;
+        }
       }
       return i;
     });
@@ -34,28 +76,53 @@ const ExportForm = ({ partyList }) => {
 
   const onSubmitHandler = () => {
     let checkPassword = prompt("Please enter your Password", "");
-    if(checkPassword == '123456'){
-        value?.map((i) => {
-            if(i.stoneId && i.weight){
-              const data = JSON.stringify({
-                stone_id: i.stoneId,
-                weight: i.weight,
-                party: selectedParty
-              });
-            }
-        })
-    }else{
-        alert("Invalid Password!")
+    if (checkPassword == "123456") {
+      const id = toast.loading("Please wait...");
+
+      const stockToUpdate = [];
+      const stockTodelete = [];
+
+      const promiseArray = value?.map((i) => {
+        if (i.stoneId && i.weight) {
+          const data = JSON.stringify({
+            stone_id: i.stoneId,
+            party: selectedParty,
+            lot_no: i.lot_no,
+            stock_type: i.stock_type,
+            current_assign: i.party,
+            weight: i.weight,
+            status: i.status,
+          });
+          stockToUpdate.push(exportStock(data));
+          stockTodelete.push(deleteStock(i.id));
+        } else {
+          toast.error(`Stone id ${i.stoneId} not found`, {
+            autoClose: 4000,
+          });
+        }
+        return i;
+      });
+
+      Promise.all([...stockToUpdate, ...stockTodelete]).finally(() => {
+        toast.update(id, {
+          render: "data updated successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 4000,
+        });
+      });
+    } else {
+      alert("Invalid Password!");
     }
-  }
+  };
 
   const appendRowHandler = () => {
-    const uniq = 'id' + (new Date()).getTime();
+    const uniq = "id" + new Date().getTime();
     const data = {
       id: uniq,
       stoneId: "",
       weight: "",
-      isGetted: true
+      isGetted: false,
     };
 
     setvalue([...value, data]);
@@ -68,18 +135,18 @@ const ExportForm = ({ partyList }) => {
   return (
     <div>
       <div>
-      <div className="form-group">
-        <label>Select Party</label>
-        <select
-          name="party"
-          className="form-control  mb-4"
-          onChange={(e) => setselectedParty(e?.target?.value)}
-        >
-          {partyList?.map((item) => {
-            return <option value={item?.id}>{item?.name}</option>;
-          })}
-        </select>
-      </div>
+        <div className="form-group">
+          <label>Select Party</label>
+          <select
+            name="party"
+            className="form-control  mb-4"
+            onChange={(e) => setselectedParty(e?.target?.value)}
+          >
+            {partyList?.map((item) => {
+              return <option value={item?.id}>{item?.name}</option>;
+            })}
+          </select>
+        </div>
         <div className="row">
           <div className="form-group  col-md-4">
             <label>Stone Id</label>
@@ -105,7 +172,7 @@ const ExportForm = ({ partyList }) => {
                     required=""
                     value={i.stoneId}
                     ref={focusNextRef}
-                    />
+                  />
                 </div>
                 <div className="form-group mr-20">
                   <input
@@ -119,7 +186,7 @@ const ExportForm = ({ partyList }) => {
                     placeholder="Enter Weight"
                     required=""
                     ref={focusNextRef}
-                    />
+                  />
                 </div>
 
                 <div className="form-group">
@@ -140,7 +207,11 @@ const ExportForm = ({ partyList }) => {
           })}
       </div>
       <div className="form-group">
-        <button className="btn btn-success"  id="append-btn" onClick={appendRowHandler}>
+        <button
+          className="btn btn-success"
+          id="append-btn"
+          onClick={appendRowHandler}
+        >
           Add Stone Id/weight
         </button>
       </div>
