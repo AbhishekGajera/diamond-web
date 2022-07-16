@@ -14,6 +14,8 @@ const OutSideForm = ({ partyList }) => {
   const [partyCode, setPartyCode] = useState("");
   const [stockDetail, setstockDetail] = useState([]);
   const [partyName, setpartyName] = useState([]);
+  const [partyDescription, setpartyDescription] = useState('')
+
 
 
   // bydefault select first party
@@ -21,6 +23,7 @@ const OutSideForm = ({ partyList }) => {
     setselectedParty(partyList[0]?.id);
     setselectedPartyType(partyList[0]?.type)
     setpartyName(partyList[0]?.name)
+    setpartyDescription(partyList[0]?.description)
     if (partyList[0]) {
       let nfn = partyList[0]?.name.match(/\b(\w)/g);
       if (nfn != null) {
@@ -109,6 +112,7 @@ const OutSideForm = ({ partyList }) => {
     setselectedParty(itemValue.id);
     setselectedPartyType(itemValue?.type)
     setpartyName(itemValue.name)
+    setpartyDescription(itemValue.description)
     let nfn = itemValue.name.match(/\b(\w)/g);
     if (nfn != null) {
       const Pname = nfn[0] + (nfn[1] || "");

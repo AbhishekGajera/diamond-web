@@ -89,14 +89,15 @@ const StockListById = () => {
         stone_id: valurToEdit?.stone_id,
         weight: valurToEdit?.weight,
     })
-    updateStock(data).finally(() => {
+    updateStock(valurToEdit.id,data).finally(() => {
       getData(), setvalurToEdit({}), setisOpenModel(false)
     });
   }
 
   // delete party with confirmation
   const onClickHandler = (id) => {
-    if (window.confirm("Are you sure want to delete this User ?")) {
+    let checkPassword = prompt("Please enter your Password", "");
+    if (checkPassword == '123456') {
       deleteStock(id).finally(() => {
         getData(), setStock({ ...stock, LotNo: "", stoneId: "" });
       });
@@ -254,7 +255,6 @@ const StockListById = () => {
                 </thead>
                 <tbody>
                   {dataList?.map((item, index) => {
-                    console.log("dd",item)
                     return (
                       <tr>
                         <td>{index + 1}</td>

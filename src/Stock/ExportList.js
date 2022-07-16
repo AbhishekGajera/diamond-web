@@ -151,7 +151,6 @@ function ExportList() {
                   </thead>
                   <tbody>
                                     {data?.map((item, index) => {
-                                        console.log("it",item?.createdAt)
                                         return <tr>
                                             <td >{index + 1}</td>
                                             <td >{item?.stone_id}</td>

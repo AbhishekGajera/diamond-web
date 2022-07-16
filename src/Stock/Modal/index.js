@@ -1,7 +1,7 @@
 import React,{useState ,useEffect, useRef} from 'react'
 import { useReactToPrint } from 'react-to-print';
 
-const Modal = ({ show, data, partyName, handleClose}) => {
+const Modal = ({ show, data, partyName, handleClose, partyDescription}) => {
     const showHideClassName = show ? "modal d-block" : "modal d-none";
 
     const componentRef = useRef();
@@ -14,7 +14,6 @@ const Modal = ({ show, data, partyName, handleClose}) => {
     var time =  today.getHours() + ":" + today.getMinutes();
 
     useEffect(() => {
-       
         setDataList(data);
     }, []) 
        
@@ -43,7 +42,7 @@ const Modal = ({ show, data, partyName, handleClose}) => {
                             </tr>
                             <tr>
                                 <td className='text-left'>Process :</td>
-                                <td className='text-left'><input type="text" Value='Laser' /></td>
+                                <td className='text-left'><input type="text" Value={partyDescription} /></td>
                                 <td className='text-right'>Date :</td>
                                 <td className='text-right'><input type="text" Value={date} /></td>
                             </tr>
@@ -78,7 +77,7 @@ const Modal = ({ show, data, partyName, handleClose}) => {
                                 })}
                                 <tr>
                                     <th>Total</th>
-                                    <th>{totalkapn.toFixed(2)}</th>
+                                    <th></th>
                                     <td></td>
                                     <td></td>
                                     <th>{totalWeight.toFixed(2)}</th>
@@ -109,7 +108,7 @@ const Modal = ({ show, data, partyName, handleClose}) => {
                             </tr>
                             <tr>
                                 <td className='text-left'>Process :</td>
-                                <td className='text-left'><input type="text" Value='Laser' readonly/></td>
+                                <td className='text-left'><input type="text" Value={partyDescription} readonly/></td>
                                 <td className='text-right'>Date :</td>
                                 <td className='text-right'><input type="text" Value={date} /></td>
                             </tr>
@@ -142,7 +141,7 @@ const Modal = ({ show, data, partyName, handleClose}) => {
                                 })}
                                 <tr>
                                     <th>Total</th>
-                                    <th>{totalkapn.toFixed(2)}</th>
+                                    <th></th>
                                     <td></td>
                                     <td></td>
                                     <th>{totalWeight.toFixed(2)}</th>

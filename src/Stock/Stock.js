@@ -21,7 +21,6 @@ function Stock() {
     if(stockId === '1'){
       setStockType("outside")
     }
-    // console.info(outsidePartyList)
   }, [stockId])
   
 

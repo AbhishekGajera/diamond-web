@@ -14,6 +14,7 @@ const IssuesForm = ({ partyList }) => {
   const [stockDetail, setstockDetail] = useState([]);
   const [isOpenModel, setisOpenModel] = useState(false);
   const [partyName, setpartyName] = useState([]);
+  const [partyDescription, setpartyDescription] = useState('')
 
   const focusNextRef = useFocusNext();
 
@@ -41,6 +42,7 @@ const IssuesForm = ({ partyList }) => {
     partyList.map(item => {
       if (item.id == selectedParty) {
         setpartyName(item.name)
+        setpartyDescription(item.description)
       }
     })
     // Do fetch here...
@@ -221,7 +223,7 @@ const IssuesForm = ({ partyList }) => {
         </button>
       </div>
       {isOpenModel &&
-        <Modal show={isOpenModel} data={stockDetail} partyName={partyName} handleClose={modalClose} />
+        <Modal show={isOpenModel} data={stockDetail} partyName={partyName} partyDescription={partyDescription} handleClose={modalClose} />
       }
     </>
   );

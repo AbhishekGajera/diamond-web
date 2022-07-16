@@ -8,13 +8,13 @@ import Modal from "../Modal/index";
 
 
 const RecieveForm = ({ partyList }) => {
-  console.log("pl",partyList);
 
   // party change handler for selectBox
   const [selectedParty, setselectedParty] = useState(partyList[0]?.id);
   const [stockDetail, setstockDetail] = useState([]);
   const [isOpenModel, setisOpenModel] = useState(false);
-const [partyName, setpartyName] = useState([]);
+  const [partyName, setpartyName] = useState([]);
+  const [partyDescription, setpartyDescription] = useState('')
 
   const focusNextRef = useFocusNext();
 
@@ -40,7 +40,7 @@ const [partyName, setpartyName] = useState([]);
   // Effect for API call
   useEffect(() => {
     setpartyName(partyList[0]?.name)
-
+    setpartyDescription(partyList[0]?.description)
     // Do fetch here...
     if (value) {
       const promiseArray = value?.map(async (i) => {
@@ -219,7 +219,7 @@ const [partyName, setpartyName] = useState([]);
       </button>
     </div>
      {isOpenModel &&
-      <Modal show={isOpenModel} data={stockDetail} partyName={partyName} handleClose={modalClose} />
+      <Modal show={isOpenModel} data={stockDetail} partyDescription={partyDescription} partyName={partyName} handleClose={modalClose} />
     } 
      </>
   );

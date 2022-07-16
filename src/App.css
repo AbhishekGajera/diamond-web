@@ -37,8 +37,15 @@
   }
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
+}
+
+.stone-details th,
+.stone-details td {
+  padding: 8px;
 }
 
 .btn-custom {
@@ -56,8 +63,8 @@ table, th, td {
 .px-15 {
   padding: 0px 15px !important;
 }
-.p12{
-  padding: 12px!important;
+.p12 {
+  padding: 12px !important;
 }
 
 .mr-20 {
@@ -68,8 +75,8 @@ table, th, td {
   margin: 0px 15px;
 }
 
-.form-group svg{
-  width:22px;
+.form-group svg {
+  width: 22px;
 }
 
 .modal {
@@ -101,42 +108,43 @@ table, th, td {
 .justify-content-center {
   justify-content: center;
 }
-table{
+table {
   width: 100%;
   margin-bottom: 8px;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
-.text-left{
+.text-left {
   text-align: left;
 }
 
-.text-right{
+.text-right {
   text-align: right;
 }
 
-.jangadDetail table tr input{
+.jangadDetail table tr input {
   border: none;
   outline: none;
   width: 100%;
 }
 .jangadDetail table thead th,
 .jangadDetail table tr th,
-.jangadDetail table tbody td{
+.jangadDetail table tbody td {
   text-align: center;
 }
 
-.jangadDetail table tr td{
+.jangadDetail table tr td {
   width: 80px;
 }
 .navbar {
   background-color: black;
+  border-radius: 0px;
 }
 .navbar a {
-  color: #FFFF;
+  color: #ffff;
 }
 .navbar-nav {
   padding: 14px;
