@@ -53,7 +53,7 @@ function Stock() {
       <div className="container">
         <h4 className="mt-3 text-success mb-4">Stock Management</h4>
         <div className="row btn-custom">
-          <div className="col-md-3"></div>
+          <div className="col-md-2"></div>
           <div className="col-md-2">
             <Link className="btn btn-primary" to="/stock/1">
               Create Stock
@@ -69,7 +69,12 @@ function Stock() {
               View All Stock List
             </Link>
           </div>
-          <div className="col-md-3"></div>
+          <div className="col-md-2">
+            <Link className="btn btn-success" to="/exportlist">
+              View All Export List
+            </Link>
+          </div>
+          {/* <div className="col-md-3"></div> */}
         </div>
         {stockId === "2" && (
           <div className="row btn-custom">

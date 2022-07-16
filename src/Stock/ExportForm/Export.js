@@ -84,12 +84,13 @@ const ExportForm = ({ partyList }) => {
 
       const promiseArray = value?.map((i) => {
         if (i.stoneId && i.weight) {
+          console.log("i",i)
           const data = JSON.stringify({
             stone_id: i.stoneId,
             party: selectedParty,
             lot_no: i.lot_no,
             stock_type: i.stock_type,
-            current_assign: i.party,
+            current_assign: i.current_assign,
             weight: i.weight,
             status: i.status,
           });

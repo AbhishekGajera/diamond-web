@@ -254,6 +254,7 @@ const StockListById = () => {
                 </thead>
                 <tbody>
                   {dataList?.map((item, index) => {
+                    console.log("dd",item)
                     return (
                       <tr>
                         <td>{index + 1}</td>

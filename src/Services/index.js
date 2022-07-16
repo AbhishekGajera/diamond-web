@@ -17,3 +17,4 @@ export const getStockByParty = (id,limit=1000,page=1) => api(`fetch-stock?party=
 export const updateStock = (data) => api(`update-stock`,'PATCH',data)
 export const fetchUniqueStocks = () => api(`fetch-unique-stocks`, 'GET');
 export const exportStock = (data) => api(`export-stock`, 'POST',data);
+export const fetchExport = (limit = 1000, page = 1) => api(`fetch-export?limit=${limit}&page${page}&custom=true`, 'GET');

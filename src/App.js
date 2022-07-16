@@ -8,6 +8,8 @@ import Party from "./Party/Party";
 import Stock from "./Stock/Stock";
 import PartyList from "./Party/PartyList";
 import StockList from "./Stock/StockList";
+import ExportList from "./Stock/ExportList";
+
 import StockListById from "./Stock/StockListById";
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
           <Route path="/stock" element={<Stock />} />
           <Route path="/stock/:stockId" element={<Stock />} />
           <Route path="/stocklist" element={<StockList />} />
+          <Route path="/exportlist" element={<ExportList />} />
+
           <Route path="/stocklist/:id/:name" element={<StockListById />} />
         </Routes>
       </div>
