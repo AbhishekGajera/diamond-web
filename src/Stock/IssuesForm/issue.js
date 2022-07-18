@@ -95,7 +95,7 @@ const IssuesForm = ({ partyList }) => {
       });
 
       try {
-        stockToUpdate.push(updateStock(data))
+        stockToUpdate.push(updateStock(i.stoneId,data))
         jangadDetail.push(JSON.parse(data))
         // await updateStock(data);
       } catch (error) {
