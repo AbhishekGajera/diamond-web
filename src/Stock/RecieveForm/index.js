@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useDebounce from "../../Hooks/useDebounce";
-import { getStockById, updateStock } from "../../Services";
+import { getStockById, updateStockByStoneId } from "../../Services";
 import useFocusNext from '../../Hooks/useFocusNext'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -91,9 +91,9 @@ const RecieveForm = ({ partyList }) => {
       });
 
       try {
-        stockToUpdate.push(updateStock(i.stoneId,data))
+        stockToUpdate.push(updateStockByStoneId(i.stoneId,data))
         jangadDetail.push(JSON.parse(data))
-        // await updateStock(data);
+        // await updateStockByStoneId(data);
       } catch (error) {
         toast.error(`Stone id ${i.stoneId} not found`,{
           autoClose : 4000
