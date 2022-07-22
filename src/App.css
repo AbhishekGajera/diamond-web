@@ -99,6 +99,13 @@ td {
 .d-none {
   display: none !important;
 }
+.card{
+  background: #FFFFFF;
+  transform: translateZ(0px);
+  border: 1px solid rgba(34, 34, 34, 0.15);
+  padding: 15px;
+  margin-bottom: 10px;
+}
 
 .d-flex {
   display: flex;
@@ -112,7 +119,9 @@ table {
   width: 100%;
   margin-bottom: 8px;
 }
-
+.pl-6{
+  padding-left: 6px;
+}
 .text-center {
   text-align: center;
 }

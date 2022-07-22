@@ -14,7 +14,7 @@ function StockList() {
   const [loaded, setLoaded] = useState(false);
   const [searchStock, setsearchStock] = useState('');
   const [stockInformation, setstockInformation] = useState(null)
-  const debouncedSearch = useDebounce(searchStock,500)
+  const debouncedSearch = useDebounce(searchStock, 500)
 
   const navigate = useNavigate();
 
@@ -22,10 +22,14 @@ function StockList() {
     const stokes = await fetchStoke(1000, 1);
     const data = [];
 
+    // console.log("stokes---",groupBy(stokes.data.results,'party.id'));
+    const TotalParty = (groupBy(stokes.data.results, 'party.id'));
+
     // fetch all stock and make them uniq by party name
     // and total field is to see how much diamond the current party is holding
     // TODO: it's bad practice but @mayur_jani you need to find some way to get it filter from backend
     stokes?.data?.results?.map((item) => {
+      // console.log("item",item);
       const elm = data.find(
         (element) => element?.party?.name === item?.party?.name
       );
@@ -42,11 +46,15 @@ function StockList() {
 
     // get total of all diamonds that all parties are holding
     let gtotal = 0;
-    data.map((item) => {
+    data.map((item, index) => {
       gtotal = gtotal + parseInt(item.total);
+      data[index]['inside'] = groupBy(TotalParty[item.party.id]?.filter((item) => item?.stock_type === 1), "current_assign.id");
+      data[index]['outside'] = groupBy(TotalParty[item.party.id]?.filter((item) => item?.stock_type === 0), "current_assign.id");
       return item;
     });
     data.push({ gtotal });
+
+    console.log("data---", data)
 
     // grouped all parties by their type to show differnt in table
     const result = groupBy(data, "party.type");
@@ -62,6 +70,8 @@ function StockList() {
     index = 1;
     setdataList(result);
     setLoaded(true);
+
+    console.log("dataList", dataList);
   };
 
   useEffect(() => {
@@ -101,9 +111,9 @@ function StockList() {
   const formatedType = (selectType) => {
     switch (selectType) {
       case 0:
-        return "Outside";
+        return "Outside Stock";
       case 1:
-        return "Inside";
+        return "Inside Stock";
       default:
         return "";
     }
@@ -123,13 +133,17 @@ function StockList() {
   const getStockInformation = async (id) => {
     try {
       const { data } = await stockByStone(id)
-      if(data){
+      if (data) {
         setstockInformation(data)
       }
     } catch (error) {
       setstockInformation(null)
     }
   }
+
+  let outsideTotal = 0;
+  let insideTotal = 0
+  let partyname = '';
 
   return (
     <>
@@ -188,7 +202,7 @@ function StockList() {
               </div>
             </div>
           </div>
-          {stockInformation && <div className="stone-details" style={{ position : 'relative', left : '-15px' }}>
+          {stockInformation && <div className="stone-details" style={{ position: 'relative', left: '-15px' }}>
             <tr>
               <th>Stone Id</th>
               <td>{stockInformation?.stone_id}</td>
@@ -210,74 +224,149 @@ function StockList() {
               <td>{stockInformation?.current_assign?.name}</td>
             </tr>
           </div>}
-          <div className="row">
-            <div
-              className="col-md-12 margin15"
-              style={{ border: "1px solid rgb(206, 200, 200)" }}
-            >
-              <h5 className="text-center  ml-4 mb-5 mt-4">Stock</h5>
-              <table className="table table-hover mb-5 margin15">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Total Diamond</th>
-                    <th>Current Party</th>
-                    <th>Party Type</th>
-                    <th>Original Party</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(dataList)?.map((item, index) => {
-                    return (
-                      <>
-                        <tr>
-                          <td colSpan={6}>
-                            {" "}
-                            <b> {formatedType(+item[0])} </b>{" "}
-                          </td>{" "}
-                        </tr>
-                        {item[1]?.map((i, ind) => {
-                          return (
-                            <tr key={ind}>
-                              <td>
-                                {i.gtotal == undefined || null ? (
-                                  i?.number
-                                ) : (
-                                  <b>Total Diamonds</b>
-                                )}
-                              </td>
-                              <th>
-                                {i?.total !== undefined || null
-                                  ? i?.total
-                                  : i.gtotal}
-                              </th>
-                              <td>{i?.party?.name}</td>
-                              <td>
-                                {formatedType(i?.party?.type)}{" "}
-                                {fomatedParty(i?.party?.outsideParty)}
-                              </td>
-                              <td>{i?.current_assign?.name}</td>
 
-                              <td>
-                                {i.gtotal == undefined || null ? (
-                                  <button
-                                    className="btn btn-success mx-15"
-                                    onClick={() => onClickView(i)}
-                                  >
-                                    View
-                                  </button>
-                                ) : null}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+          <div className="row  margin15">
+            {Object.entries(dataList)?.map((item, index) => {
+              return (
+                <>
+                  <div className="row">
+                    <h2>
+                      {" "}
+                      <b> {formatedType(+item[0])} </b>{" "}
+                      {" "}
+                    </h2>
+
+                    {item[1]?.map((i, ind) => {
+                      return (
+                        <>
+                        {i.gtotal == undefined || null ? ( 
+                          <div className="row card">
+                            <div className="col-md-4" key={ind}>
+                              <div className="d-flex">
+                                <h4>Id : </h4>
+                                <span className="pl-6">{i?.number}</span>
+                              </div>
+                              <div className="d-flex">
+                                <h4>Total Diamond : </h4>
+                                <span className="pl-6">
+                                  {i?.total}
+                                </span>
+                              </div>
+                              <div className="d-flex">
+                                <h4>Current Party : </h4>
+                                <span className="pl-6">{i?.party?.name}</span>
+                              </div>
+                              <div className="d-flex">
+                                <h4>Party Type :</h4>
+                                <span className="pl-6">
+                                  {formatedType(i?.party?.type)}{" "}
+                                  {fomatedParty(i?.party?.outsideParty)}
+                                </span>
+                              </div>
+                              <div className="d-flex">
+                                <h4>Original Party : </h4>
+                                <span className="pl-6">{i?.current_assign?.name}</span>
+                              </div>
+                              <div className="d-flex">
+                                <button
+                                  className="btn btn-success"
+                                  onClick={() => onClickView(i)}
+                                >
+                                  View
+                                </button>
+                              </div>
+                            </div>
+                            <div className="col-md-4">
+                              <h5 className="text-center  ml-4 mb-5 mt-4">Inside</h5>
+                              <table className="table table-hover mb-5 margin15">
+                                <thead>
+                                  <tr>
+                                    <th>Party</th>
+                                    <th>Diamond</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {[i['inside']]?.map((j, index) => {
+                                    {
+                                      partyname = j && Object.values(j)?.map(detail => (
+                                        [detail[0]?.current_assign?.name,detail.length]
+                                      ))
+                                    }
+                                  })}
+                                  {partyname && partyname?.map((name, index) => {
+                                    insideTotal += name[1] ;
+                                    return (
+                                      <tr key={index}>
+                                        <td>{name[0]}</td>
+                                        <td>{name[1]}</td>
+                                      </tr>
+                                    );
+                                  })}
+                                  <tr>
+                                    <th>Total Diamond</th>
+                                    <th>{insideTotal}</th>
+                                  </tr>
+                                  <tr style={{display:'none'}}>
+                                    {insideTotal = 0}
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div className="col-md-4">
+                              <h5 className="text-center  ml-4 mb-5 mt-4">Outside</h5>
+                              <table className="table table-hover mb-5 margin15">
+                                <thead>
+                                  <tr>
+                                    <th>Party</th>
+                                    <th>Diamond</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {[i['outside']]?.map((j, index) => {
+                                    {
+                                      partyname = j && Object.values(j)?.map(detail => (
+                                        
+                                        [detail[0]?.current_assign?.name,detail.length]
+                                      ))
+                                    }
+                                  })}
+                                  {partyname && partyname?.map((name, index) => {
+                                    outsideTotal += name[1];
+                                    return (
+                                      <tr key={index}>
+                                        <td>{name[0]}</td>
+                                        <td>{name[1]}</td>
+                                      </tr>
+                                    );
+                                  })}
+                                  <tr>
+                                    <th>Total Diamond</th>
+                                    <th>{outsideTotal}</th>
+                                  </tr>
+                                  <tr style={{display:'none'}}>
+                                    {outsideTotal = 0}
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        ):(
+                          <div className="row card">
+                             <div className="col-md-4">
+                              <div className="d-flex">
+                                <h4>Total Diamonds : </h4>
+                                <h4 className="pl-6">{i.gtotal}</h4>
+                                </div>
+                              </div>
+                          </div>
+                        )}
+                        </>
+                      );
+                    })}
+                  </div>
+                </>
+              );
+            })}
           </div>
         </div>
       </ReactLoader>
