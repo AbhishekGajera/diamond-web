@@ -247,14 +247,13 @@ function StockList() {
                                 <span className="pl-6">{i?.number}</span>
                               </div>
                               <div className="d-flex">
+                                <h2> <b> {i?.party?.name} </b></h2>
+                              </div>
+                              <div className="d-flex">
                                 <h4>Total Diamond : </h4>
                                 <span className="pl-6">
                                   {i?.total}
                                 </span>
-                              </div>
-                              <div className="d-flex">
-                                <h4>Current Party : </h4>
-                                <span className="pl-6">{i?.party?.name}</span>
                               </div>
                               <div className="d-flex">
                                 <h4>Party Type :</h4>
