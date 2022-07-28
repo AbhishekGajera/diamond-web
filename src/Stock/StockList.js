@@ -47,9 +47,9 @@ function StockList() {
     // get total of all diamonds that all parties are holding
     let gtotal = 0;
     data.map((item, index) => {
-      gtotal = gtotal + parseInt(item.total);
-      data[index]['inside'] = groupBy(TotalParty[item.party.id]?.filter((item) => item?.stock_type === 1), "current_assign.id");
-      data[index]['outside'] = groupBy(TotalParty[item.party.id]?.filter((item) => item?.stock_type === 0), "current_assign.id");
+      gtotal = gtotal + parseInt(item?.total);
+      data[index]['inside'] = groupBy(TotalParty[item?.party?.id]?.filter((item) => item?.stock_type === 1), "current_assign.id");
+      data[index]['outside'] = groupBy(TotalParty[item?.party?.id]?.filter((item) => item?.stock_type === 0), "current_assign.id");
       return item;
     });
     data.push({ gtotal });
@@ -61,7 +61,7 @@ function StockList() {
 
     // give unique id number to each element of grouped object
     let index = 1;
-    Object.entries(result).map((i) => {
+    Object.entries(result)?.map((i) => {
       i[1].map((j) => {
         j.number = index;
         index++;
@@ -71,7 +71,6 @@ function StockList() {
     setdataList(result);
     setLoaded(true);
 
-    console.log("dataList", dataList);
   };
 
   useEffect(() => {
