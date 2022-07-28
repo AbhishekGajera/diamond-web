@@ -111,8 +111,9 @@ const IssuesForm = ({ partyList }) => {
       if (confirm("Print Jangad") == true) {
         setstockDetail(jangadDetail)
         setisOpenModel(true)
+      }else{
+        navigate('/stocklist')
       }
-      // navigate('/stocklist')
     });
 
   };
